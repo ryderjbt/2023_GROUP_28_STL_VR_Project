@@ -2,6 +2,8 @@
 
 #include "VRRenderThread.h"
 #include <vtkLight.h>
+#include <vtkPlane.h>
+#include <vtkClipDataSet.h>
 
 VRRenderThread::VRRenderThread(QObject *parent) : QThread(parent)
 {
@@ -48,7 +50,16 @@ void VRRenderThread::addLight()
 void VRRenderThread::applyFilters()
 {
     // Apply filters to modify the rendered data (if needed)
-    // Example code for applying filters can be added here
+    vtkSmartPointer<vtkPlane> clipPlane = vtkSmartPointer<vtkPlane>::New();
+    clipPlane->SetOrigin(0.0, 0.0, 0.0);
+    clipPlane->SetNormal(-1.0, 0.0, 0.0);
+
+    vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
+    clipFilter->SetInputConnection(SOURCE->GetOutputPort());
+    clipFilter->SetClipFunction(clipPlane);
+
+    // Set up the mapper with the filtered data
+    MAPPER->SetInputConnection(clipFilter->GetOutputPort());
 }
 
 void VRRenderThread::run()
