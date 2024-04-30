@@ -1,13 +1,14 @@
-// VRRenderThread.h
-
 #ifndef VRRENDERTHREAD_H
 #define VRRENDERTHREAD_H
 
 #include <QThread>
+#include <QList>
 #include <vtkSmartPointer.h>
 #include <vtkRenderer.h>
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
+#include <vtkActor.h>
+#include <vtkLight.h>
 
 // Forward declaration of ModelPart class
 class ModelPart;
