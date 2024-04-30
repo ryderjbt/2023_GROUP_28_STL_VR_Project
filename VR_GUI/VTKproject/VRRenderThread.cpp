@@ -1,37 +1,71 @@
+// VRRenderThread.cpp
+
 #include "VRRenderThread.h"
+#include <vtkLight.h>
 
-VRRenderThread::VRRenderThread(QObject *parent) : QThread(parent) {
-    setupVRRenderer();
+VRRenderThread::VRRenderThread(QObject *parent) : QThread(parent)
+{
+    // Initialize renderer, render window, and interactor
+    m_renderer = vtkSmartPointer<vtkRenderer>::New();
+    m_renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
+    m_renderWindow->AddRenderer(m_renderer);
+    m_interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+    m_interactor->SetRenderWindow(m_renderWindow);
 }
 
-VRRenderThread::~VRRenderThread() {
-    // Clean up resources
-    vrRenderWindow->Finalize();
+VRRenderThread::~VRRenderThread()
+{
+    // Stop the interactor
+    m_interactor->TerminateApp();
+    m_interactor->UnRegister(nullptr);
 }
 
-void VRRenderThread::addActorOffline(vtkSmartPointer<vtkActor> actor) {
-    vrActors.append(actor);
+void VRRenderThread::addActorOffline(vtkSmartPointer<vtkActor> actor)
+{
+    // Add actor to the list of actors for VR rendering
+    m_vrActors.append(actor);
 }
 
-void VRRenderThread::startVR() {
-    start();
+void VRRenderThread::addLight()
+{
+    // Create a scene light
+    vtkSmartPointer<vtkLight> light = vtkSmartPointer<vtkLight>::New();
+    light->SetLightTypeToSceneLight();
+    light->SetPosition(5, 5, 15);
+    light->SetPositional(true);
+    light->SetConeAngle(10);
+    light->SetFocalPoint(0, 0, 0);
+    light->SetDiffuseColor(1, 1, 1);
+    light->SetAmbientColor(1, 1, 1);
+    light->SetSpecularColor(1, 1, 1);
+    light->SetIntensity(0.5);
+
+    // Add the light to the renderer
+    m_renderer->AddLight(light);
+    m_lights.append(light);
 }
 
-void VRRenderThread::run() {
-    renderVRActors();
-    emit vrRenderingFinished();
+void VRRenderThread::applyFilters()
+{
+    // Apply filters to modify the rendered data (if needed)
+    // Example code for applying filters can be added here
 }
 
-void VRRenderThread::setupVRRenderer() {
-    vrRenderer = vtkSmartPointer<vtkRenderer>::New();
-    vrRenderWindow = vtkSmartPointer<vtkRenderWindow>::New();
-    vrRenderWindow->AddRenderer(vrRenderer);
-    vrRenderWindow->SetStereoRender(1); // Enable stereo rendering
-}
-
-void VRRenderThread::renderVRActors() {
-    for (int i = 0; i < vrActors.size(); ++i) {
-        vrRenderer->AddActor(vrActors.at(i));
+void VRRenderThread::run()
+{
+    // Add actors to the renderer
+    for (vtkSmartPointer<vtkActor> actor : m_vrActors)
+    {
+        m_renderer->AddActor(actor);
     }
-    vrRenderWindow->Render();
+
+    // Add lights to the scene
+    for (vtkSmartPointer<vtkLight> light : m_lights)
+    {
+        m_renderer->AddLight(light);
+    }
+
+    // Start the rendering loop
+    m_renderWindow->Render();
+    m_interactor->Start();
 }
