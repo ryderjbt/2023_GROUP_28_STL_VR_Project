@@ -1,5 +1,10 @@
+// mainwindow.h
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+
+/** @file
+* This file contains the declearions of all includes and functions used by mainwindow.cpp
+*/
 
 #include <QMainWindow>
 #include <QFileDialog>
