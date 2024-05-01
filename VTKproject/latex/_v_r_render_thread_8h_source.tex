@@ -1,0 +1,74 @@
+\doxysection{VRRender\+Thread.\+h}
+\hypertarget{_v_r_render_thread_8h_source}{}\label{_v_r_render_thread_8h_source}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ VRRenderThread.h}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#ifndef\ VR\_RENDER\_THREAD\_H}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#define\ VR\_RENDER\_THREAD\_H}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <QObject>}}
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <QThread>}}
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QMutex>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <QWaitCondition>}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <chrono>}}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <vtkSmartPointer.h>}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#include\ <vtkActor.h>}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#include\ <vtkOpenVRRenderWindow.h>}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#include\ <vtkOpenVRRenderWindowInteractor.h>}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#include\ <vtkOpenVRRenderer.h>}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <vtkOpenVRCamera.h>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <vtkActorCollection.h>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <vtkCommand.h>}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <vtkLight.h>}}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_v_r_render_thread}{VRRenderThread}}\ :\ \textcolor{keyword}{public}\ QThread\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{enum}\ Command\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ END\_RENDER,}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ ROTATE\_X,}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ ROTATE\_Y,}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ ROTATE\_Z}
+\DoxyCodeLine{00032\ \ \ \ \ \};}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \mbox{\hyperlink{class_v_r_render_thread}{VRRenderThread}}(QObject*\ parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \mbox{\hyperlink{class_v_r_render_thread}{\string~VRRenderThread}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ addActorOffline(vtkActor*\ actor);}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ issueCommand(Command\ cmd,\ \textcolor{keywordtype}{double}\ value);}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{void}\ run()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ vtkSmartPointer<vtkOpenVRRenderWindow>\ window;}
+\DoxyCodeLine{00048\ \ \ \ \ vtkSmartPointer<vtkOpenVRRenderWindowInteractor>\ interactor;}
+\DoxyCodeLine{00049\ \ \ \ \ vtkSmartPointer<vtkOpenVRRenderer>\ renderer;}
+\DoxyCodeLine{00050\ \ \ \ \ vtkSmartPointer<vtkOpenVRCamera>\ camera;}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ QMutex\ mutex;}
+\DoxyCodeLine{00053\ \ \ \ \ QWaitCondition\ condition;}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ vtkSmartPointer<vtkActorCollection>\ actors;}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ std::chrono::time\_point<std::chrono::steady\_clock>\ t\_last;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keywordtype}{bool}\ endRender;}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keywordtype}{double}\ rotateX;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Degrees\ to\ rotate\ around\ X\ axis\ (per\ time-\/step)}}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordtype}{double}\ rotateY;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Degrees\ to\ rotate\ around\ Y\ axis\ (per\ time-\/step)}}
+\DoxyCodeLine{00063\ \ \ \ \ \textcolor{keywordtype}{double}\ rotateZ;\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Degrees\ to\ rotate\ around\ Z\ axis\ (per\ time-\/step)}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{void}\ setupLights();}
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}\ setupFilters();}
+\DoxyCodeLine{00067\ \};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
