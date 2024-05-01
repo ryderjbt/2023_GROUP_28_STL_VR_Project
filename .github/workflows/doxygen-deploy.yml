@@ -1,0 +1,40 @@
+# doxygen-deploy.yml
+name: doxygen-deploy
+
+on:
+  push:
+    branches: [main]	# note this needs to be set to your default branch
+                      # name (this might be "main" rather tha "master")
+
+
+jobs:
+  # The job that will build VTKproject
+  deploy-VR_GUI/VTKproject:
+
+    # Defines the operating system for the virtual computer
+    runs-on: ubuntu-latest
+
+    # A list of steps to follow to complete the build
+    # (a list of commands to execute on the virtual computer)
+    steps:
+
+    # This is a predefined action that checks out a copy of your code
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install doxygen
+      run: sudo apt-get install -y doxygen
+
+    # Run Doxygen on VTKproject folder
+    - name: Run Doxygen
+      working-directory: ${{github.workspace}}/VR_GUI/VTKproject
+      run: doxygen
+
+    # Deploy html output from Doxygen to ghpages branches- name: Deploy
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4.2.5
+      with:
+        #The branch the action should deploy to
+        branch: gh-pages
+        # The folder the action should deploy
+        folder: ${{github.workspace}}/VR_GUI/VTKproject/html
