@@ -9,7 +9,7 @@ on:
 
 jobs:
   # The job that will build VTKproject
-  deploy-VTKproject:
+  deploy-VR_GUI/VTKproject:
 
     # Defines the operating system for the virtual computer
     runs-on: ubuntu-latest
@@ -27,7 +27,7 @@ jobs:
 
     # Run Doxygen on VTKproject folder
     - name: Run Doxygen
-      working-directory: ${{github.workspace}}/VTKproject
+      working-directory: ${{github.workspace}}/VR_GUI/VTKproject
       run: doxygen
 
     # Deploy html output from Doxygen to ghpages branches- name: Deploy
@@ -37,4 +37,4 @@ jobs:
         #The branch the action should deploy to
         branch: gh-pages
         # The folder the action should deploy
-        folder: ${{github.workspace}}/VTKproject/html
+        folder: ${{github.workspace}}/VR_GUI/VTKproject/html
