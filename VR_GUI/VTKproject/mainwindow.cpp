@@ -129,8 +129,8 @@ void MainWindow::on_actionOpen_File_triggered(){
     ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
 
     /* In this case, we will retrieve the name string from the internal QVariant data array */
-    QString text = selectedPart->data(0).toString();
-    QString name = QString("Item %1,%2").arg(text).arg(fileName);
+    int text = 1 + selectedPart->childCount();
+    QString name = QString("Item %1 - %2").arg(text).arg(fileName);
     QString visible("true");
 
     ModelPart *childItem = new ModelPart({ name, visible });
@@ -164,7 +164,7 @@ void MainWindow::on_actionItem_Options_triggered() {
         emit statusUpdateMessage(QString("Dialog accepted "),0);
         selectedPart->set( 0, dialog.getName() );
         selectedPart->setColour( dialog.getR(), dialog.getG(), dialog.getB() );
-        selectedPart->setVisible(1, dialog.getVisible());
+        selectedPart->setVisible(dialog.getVisible());
         updateRenderer();
     } else {
         emit statusUpdateMessage(QString("Dialog Rejected "),0);
@@ -179,28 +179,29 @@ void MainWindow::updateRenderer() {
     }
     renderer->Render();
     updateCamera();
+    renderWindow->Render(); //Updates renderingwindow to represent actors automatically
 }
 
 void MainWindow::updateRenderFromTree( const QModelIndex& index ){
-    if( index.isValid() ) {
+    if( index.isValid()) {
         ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
 
         // Retrieve the VTK actor from the selected part and add it to the renderer
         vtkSmartPointer<vtkActor> actor = selectedPart->getActor();
-        if (actor) { // Ensure the actor is not null
+        if (actor != nullptr && selectedPart->visible()) { // Ensure the actor is not null
             renderer->AddActor(actor);
         }
         //Retrieve actor from selected part and add to renderer
     }
 
     //Check to see if this part has any children
-    if( !partList->hasChildren(index) || (index.flags() & Qt::ItemNeverHasChildren) ){
+    if (!partList->hasChildren(index) || (index.flags() & Qt::ItemNeverHasChildren)) {
         return;
     }
 
     //Loop through childrn and add their actors
-    int rows = partList->rowCount( index );
-    for(int i = 0; i < rows; i++){
+    int rows = partList->rowCount(index);
+    for (int i = 0; i < rows; i++) {
         updateRenderFromTree(partList->index(i, 0, index));
     }
 }

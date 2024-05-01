@@ -33,6 +33,8 @@ ModelPart::ModelPart(const QList<QVariant>& data, ModelPart* parent )
     ColourR = 50;
     ColourG = 100;
     ColourB = 10;
+    isVisible = true;
+
     /* You probably want to give the item a default colour */
 }
 
@@ -112,12 +114,19 @@ void ModelPart::setColour(const unsigned char R, const unsigned char G, const un
     ColourG = G;
     ColourB = B;
 
-    actor = getActor();
     vtkColor3<unsigned char> color(getColourR(), getColourG(), getColourB());
     double r = color.GetRed() / 255.0;
     double g = color.GetGreen() / 255.0;
     double b = color.GetBlue() / 255.0;
-    actor->GetProperty()->SetColor(r, g, b);
+    //Sets colour of treeitem or entire level by looping through children
+    if (actor != nullptr) {
+        actor->GetProperty()->SetColor(r, g, b);
+    }
+    else {
+        for (i = 0; i < childCount(); i++) {
+            child(i)->setColour(R, G, B);
+        }
+    }
 }
 
 unsigned char ModelPart::getColourR() {
@@ -134,24 +143,21 @@ unsigned char ModelPart::getColourB() {
 }
 
 
-void ModelPart::setVisible(int column, bool isVisible) {
+void ModelPart::setVisible(bool isVisible) {
     set(1, isVisible);
-    actor = getActor();
-    //Change in future to loop trhough all children and set them to false or true if toplevel (nullptr) visibility is edited
+    //Sets visibility of treeitem or entire level by looping through children
     if (actor != nullptr) {
-        if(isVisible == true){
-            actor->SetVisibility(1);
-        } else {
-            actor->SetVisibility(0);
+        this->isVisible = isVisible;
+    }
+    else {
+        for (i = 0; i < childCount(); i++) {
+            child(i)->setVisible(isVisible);
         }
-    } else {
-        // Handle the case where actor is nullptr, if appropriate
-        throw std::runtime_error("Actor is null.");
     }
 }
 
 bool ModelPart::visible() {
-    return false;
+    return isVisible;
 }
 
 void ModelPart::loadSTL( QString fileName ) {

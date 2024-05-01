@@ -105,7 +105,7 @@ public:
     /** Set visible flag
       * @param isVisible sets visible/non-visible
       */
-    void setVisible(int column, bool isVisible);
+    void setVisible(bool isVisible);
 
     /** Get visible flag
       * @return visible flag as boolean 
@@ -140,6 +140,7 @@ private:
     int                                         ColourR;
     int                                         ColourG;
     int                                         ColourB;
+    int                                         i;
 	/* These are vtk properties that will be used to load/render a model of this part,
 	 * commented out for now but will be used later
 	 */
