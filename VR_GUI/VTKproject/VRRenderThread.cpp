@@ -6,6 +6,8 @@
 #include <vtkClipDataSet.h>
 #include <vtkShrinkFilter.h>
 #include <vtkDataSetMapper.h>
+#include <vtkLight.h>
+#include <vtkSmartPointer.h>
 
 VRRenderThread::VRRenderThread(QObject* parent) : QThread(parent), endRender(false), rotateX(0.0), rotateY(0.0), rotateZ(0.0) {
     actors = vtkActorCollection::New();
@@ -117,12 +119,14 @@ void VRRenderThread::setupFilters() {
     planeLeft->SetNormal(-1.0, 0.0, 0.0);
 
     vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
-    clipFilter->SetInputConnection(renderer->GetOutputPort());
+    // Assuming there is a source of data named "dataSource", connect its output port to the input connection of the clip filter
+    clipFilter->SetInputConnection(/* dataSource->GetOutputPort() */); // Replace dataSource with your actual data source
     clipFilter->SetClipFunction(planeLeft);
+    clipFilter->Update();
 
     vtkSmartPointer<vtkShrinkFilter> shrinkFilter = vtkSmartPointer<vtkShrinkFilter>::New();
-    shrinkFilter->SetInputConnection(clipFilter->GetOutputPort());
-    shrinkFilter->SetShrinkFactor(0.8);
+    shrinkFilter->SetInputData(clipFilter->GetOutput()); // Set the output of the clip filter as input data for the shrink filter
+    shrinkFilter->Update(); // Update the shrink filter after setting the input data
 
     vtkSmartPointer<vtkDataSetMapper> mapper = vtkSmartPointer<vtkDataSetMapper>::New();
     mapper->SetInputConnection(shrinkFilter->GetOutputPort());
@@ -130,9 +134,15 @@ void VRRenderThread::setupFilters() {
     actors->InitTraversal();
     vtkActor* a;
     while ((a = (vtkActor*)actors->GetNextActor())) {
+        vtkSmartPointer<vtkActor> clippedActor = vtkSmartPointer<vtkActor>::New(); // Create a new actor for each clipped actor
         vtkSmartPointer<vtkDataSetMapper> actorMapper = vtkSmartPointer<vtkDataSetMapper>::New();
-        actorMapper->SetInputConnection(shrinkFilter->GetOutputPort());
-        a->SetMapper(actorMapper);
-        renderer->AddActor(a);
+        actorMapper->SetInputConnection(mapper->GetOutputPort());
+        clippedActor->SetMapper(actorMapper);
+        renderer->AddActor(clippedActor);
     }
 }
+
+
+
+
+
