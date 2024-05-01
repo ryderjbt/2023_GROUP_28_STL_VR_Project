@@ -17,6 +17,7 @@
 #include <vtkOpenVRCamera.h>
 #include <vtkActorCollection.h>
 #include <vtkCommand.h>
+#include <vtkLight.h>
 
 class VRRenderThread : public QThread {
     Q_OBJECT
@@ -60,6 +61,9 @@ private:
     double rotateX;         // Degrees to rotate around X axis (per time-step)
     double rotateY;         // Degrees to rotate around Y axis (per time-step)
     double rotateZ;         // Degrees to rotate around Z axis (per time-step)
+
+    void setupLights();
+    void setupFilters();
 };
 
 #endif
