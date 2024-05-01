@@ -65,6 +65,7 @@ $(function() {
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="classVRRenderThread-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -80,6 +81,12 @@ Inheritance diagram for VRRenderThread:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
+<tr class="memitem:af5393c7e3267e22c69da6e0617296e3c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>END_RENDER</b>
+, <b>ROTATE_X</b>
+, <b>ROTATE_Y</b>
+, <b>ROTATE_Z</b>
+ }</td></tr>
+<tr class="separator:af5393c7e3267e22c69da6e0617296e3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae54e55debf52a3afee10238942ef5669"><td class="memItemLeft" align="right" valign="top"><a id="ae54e55debf52a3afee10238942ef5669"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>Command</b> { <b>END_RENDER</b>
 , <b>ROTATE_X</b>
 , <b>ROTATE_Y</b>
@@ -89,6 +96,14 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a35976e55f6655840aa217aa8a066f196"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVRRenderThread.html#a35976e55f6655840aa217aa8a066f196">VRRenderThread</a> (QObject *parent=nullptr)</td></tr>
+<tr class="separator:a35976e55f6655840aa217aa8a066f196"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21c23037bf11cd2a1592076c7e499de0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVRRenderThread.html#a21c23037bf11cd2a1592076c7e499de0">~VRRenderThread</a> ()</td></tr>
+<tr class="separator:a21c23037bf11cd2a1592076c7e499de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17bb943e3b852339398cfbb7cb12cf13"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVRRenderThread.html#a17bb943e3b852339398cfbb7cb12cf13">addActorOffline</a> (vtkActor *actor)</td></tr>
+<tr class="separator:a17bb943e3b852339398cfbb7cb12cf13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbc905472309a2da473241a596e43813"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVRRenderThread.html#abbc905472309a2da473241a596e43813">issueCommand</a> (int cmd, double value)</td></tr>
+<tr class="separator:abbc905472309a2da473241a596e43813"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35976e55f6655840aa217aa8a066f196"><td class="memItemLeft" align="right" valign="top"><a id="a35976e55f6655840aa217aa8a066f196"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>VRRenderThread</b> (QObject *parent=nullptr)</td></tr>
 <tr class="separator:a35976e55f6655840aa217aa8a066f196"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -99,15 +114,169 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>addActorOffline</b> (
 void&#160;</td><td class="memItemRight" valign="bottom"><b>issueCommand</b> (Command cmd, double value)</td></tr>
 <tr class="separator:a3e4ee9efa1db2f1d41731e06ef19813b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a887ba74b8a5b02f927e4564049b85ffb"><td class="memItemLeft" align="right" valign="top">enum VRRenderThread:: { ... } &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVRRenderThread.html#a887ba74b8a5b02f927e4564049b85ffb">Command</a></td></tr>
+<tr class="separator:a887ba74b8a5b02f927e4564049b85ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
+<tr class="memitem:af5bbbaf8625fc42278476a43bf018661"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVRRenderThread.html#af5bbbaf8625fc42278476a43bf018661">run</a> () override</td></tr>
+<tr class="separator:af5bbbaf8625fc42278476a43bf018661"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af5bbbaf8625fc42278476a43bf018661"><td class="memItemLeft" align="right" valign="top"><a id="af5bbbaf8625fc42278476a43bf018661"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> () override</td></tr>
 <tr class="separator:af5bbbaf8625fc42278476a43bf018661"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="af5393c7e3267e22c69da6e0617296e3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5393c7e3267e22c69da6e0617296e3c">&#9670;&nbsp;</a></span>anonymous enum</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">anonymous enum</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>List of command names </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a35976e55f6655840aa217aa8a066f196"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35976e55f6655840aa217aa8a066f196">&#9670;&nbsp;</a></span>VRRenderThread()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">VRRenderThread::VRRenderThread </td>
+          <td>(</td>
+          <td class="paramtype">QObject *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>nullptr</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Constructor </p>
+
+</div>
+</div>
+<a id="a21c23037bf11cd2a1592076c7e499de0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21c23037bf11cd2a1592076c7e499de0">&#9670;&nbsp;</a></span>~VRRenderThread()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">VRRenderThread::~VRRenderThread </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Denstructor </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a17bb943e3b852339398cfbb7cb12cf13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a17bb943e3b852339398cfbb7cb12cf13">&#9670;&nbsp;</a></span>addActorOffline()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VRRenderThread::addActorOffline </td>
+          <td>(</td>
+          <td class="paramtype">vtkActor *&#160;</td>
+          <td class="paramname"><em>actor</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This allows actors to be added to the VR renderer BEFORE the VR interactor has been started </p>
+
+</div>
+</div>
+<a id="abbc905472309a2da473241a596e43813"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbc905472309a2da473241a596e43813">&#9670;&nbsp;</a></span>issueCommand()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VRRenderThread::issueCommand </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>cmd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This allows commands to be issued to the VR thread in a thread safe way. Function will set variables within the class to indicate the type of action / animation / etc to perform. The rendering thread will then impelement this. </p>
+
+</div>
+</div>
+<a id="af5bbbaf8625fc42278476a43bf018661"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5bbbaf8625fc42278476a43bf018661">&#9670;&nbsp;</a></span>run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void VRRenderThread::run </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This is a re-implementation of a QThread function </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a887ba74b8a5b02f927e4564049b85ffb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a887ba74b8a5b02f927e4564049b85ffb">&#9670;&nbsp;</a></span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum { ... }  VRRenderThread::Command</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>List of command names </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="VRRenderThread_8h_source.html">VRRenderThread.h</a></li>
-<li>VRRenderThread.cpp</li>
+<li><a class="el" href="VRRenderThread__K_8h_source.html">VRRenderThread_K.h</a></li>
+<li><a class="el" href="VRRenderThread_8cpp.html">VRRenderThread.cpp</a></li>
+<li>VRRenderThread_K.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
