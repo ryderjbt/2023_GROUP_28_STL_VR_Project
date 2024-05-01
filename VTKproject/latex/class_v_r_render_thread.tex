@@ -1,0 +1,42 @@
+\doxysection{VRRender\+Thread Class Reference}
+\hypertarget{class_v_r_render_thread}{}\label{class_v_r_render_thread}\index{VRRenderThread@{VRRenderThread}}
+Inheritance diagram for VRRender\+Thread\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_v_r_render_thread}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_v_r_render_thread_ae54e55debf52a3afee10238942ef5669}\label{class_v_r_render_thread_ae54e55debf52a3afee10238942ef5669} 
+enum {\bfseries Command} \{ {\bfseries END\+\_\+\+RENDER}
+, {\bfseries ROTATE\+\_\+X}
+, {\bfseries ROTATE\+\_\+Y}
+, {\bfseries ROTATE\+\_\+Z}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_v_r_render_thread_a35976e55f6655840aa217aa8a066f196}\label{class_v_r_render_thread_a35976e55f6655840aa217aa8a066f196} 
+{\bfseries VRRender\+Thread} (QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\item 
+\Hypertarget{class_v_r_render_thread_a17bb943e3b852339398cfbb7cb12cf13}\label{class_v_r_render_thread_a17bb943e3b852339398cfbb7cb12cf13} 
+void {\bfseries add\+Actor\+Offline} (vtk\+Actor \texorpdfstring{$\ast$}{*}actor)
+\item 
+\Hypertarget{class_v_r_render_thread_a3e4ee9efa1db2f1d41731e06ef19813b}\label{class_v_r_render_thread_a3e4ee9efa1db2f1d41731e06ef19813b} 
+void {\bfseries issue\+Command} (Command cmd, double value)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_v_r_render_thread_af5bbbaf8625fc42278476a43bf018661}\label{class_v_r_render_thread_af5bbbaf8625fc42278476a43bf018661} 
+void {\bfseries run} () override
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+VRRender\+Thread.\+h\item 
+VRRender\+Thread.\+cpp\end{DoxyCompactItemize}
