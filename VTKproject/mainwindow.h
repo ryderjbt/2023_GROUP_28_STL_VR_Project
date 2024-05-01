@@ -15,6 +15,7 @@
 #include "ModelPartList.h"
 #include "ModelPart.h"
 #include "optiondialog.h"
+#include "VRRenderThread.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,6 +30,7 @@ public slots:
     void handleButton1();
     void handleButton2();
     void handleTreeClicked();
+    void handleVRbuttonPressed();
 
 signals:
     void statusUpdateMessage( const QString & message, int timeout );
