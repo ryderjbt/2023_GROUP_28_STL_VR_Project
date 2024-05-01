@@ -1,49 +1,65 @@
-#ifndef VRRENDERTHREAD_H
-#define VRRENDERTHREAD_H
+// VRRenderThread.h
 
+#ifndef VR_RENDER_THREAD_H
+#define VR_RENDER_THREAD_H
+
+#include <QObject>
 #include <QThread>
-#include <QList>
+#include <QMutex>
+#include <QWaitCondition>
+#include <chrono>
+
 #include <vtkSmartPointer.h>
-#include <vtkRenderer.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
 #include <vtkActor.h>
-#include <vtkLight.h>
+#include <vtkOpenVRRenderWindow.h>
+#include <vtkOpenVRRenderWindowInteractor.h>
+#include <vtkOpenVRRenderer.h>
+#include <vtkOpenVRCamera.h>
+#include <vtkActorCollection.h>
+#include <vtkCommand.h>
 
-// Forward declaration of ModelPart class
-class ModelPart;
-
-class VRRenderThread : public QThread
-{
+class VRRenderThread : public QThread {
     Q_OBJECT
 
 public:
-    explicit VRRenderThread(QObject *parent = nullptr);
+
+    enum Command {
+        END_RENDER,
+        ROTATE_X,
+        ROTATE_Y,
+        ROTATE_Z
+    };
+
+    VRRenderThread(QObject* parent = nullptr);
+
     ~VRRenderThread() override;
 
-    // Function to add actors for VR rendering
-    void addActorOffline(vtkSmartPointer<vtkActor> actor);
-
-    // Function to set up lighting in the scene
-    void addLight();
-
-    // Function to apply filters to modify the rendered data
-    void applyFilters();
+    void addActorOffline(vtkActor* actor);
+    void issueCommand(Command cmd, double value);
 
 protected:
-    // Overridden run function for the thread
+
     void run() override;
 
 private:
-    vtkSmartPointer<vtkRenderer> m_renderer; // Renderer for VR rendering
-    vtkSmartPointer<vtkRenderWindow> m_renderWindow; // Render window for VR rendering
-    vtkSmartPointer<vtkRenderWindowInteractor> m_interactor; // Interactor for VR rendering
 
-    // List to store actors for VR rendering
-    QList<vtkSmartPointer<vtkActor>> m_vrActors;
+    vtkSmartPointer<vtkOpenVRRenderWindow> window;
+    vtkSmartPointer<vtkOpenVRRenderWindowInteractor> interactor;
+    vtkSmartPointer<vtkOpenVRRenderer> renderer;
+    vtkSmartPointer<vtkOpenVRCamera> camera;
 
-    // List to store lights in the scene
-    QList<vtkSmartPointer<vtkLight>> m_lights;
+    QMutex mutex;
+    QWaitCondition condition;
+
+    vtkSmartPointer<vtkActorCollection> actors;
+
+    std::chrono::time_point<std::chrono::steady_clock> t_last;
+
+    bool endRender;
+
+    double rotateX;         // Degrees to rotate around X axis (per time-step)
+    double rotateY;         // Degrees to rotate around Y axis (per time-step)
+    double rotateZ;         // Degrees to rotate around Z axis (per time-step)
 };
 
-#endif // VRRENDERTHREAD_H
+#endif
