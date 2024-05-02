@@ -9,7 +9,7 @@ OptionDialog::OptionDialog(QWidget *parent)
     ui->horizontalSlider->setRange(0, 255);
     ui->horizontalSlider_2->setRange(0, 255);
     ui->horizontalSlider_3->setRange(0, 255);
-    ui->horizontalSlider_4->setRange(0, 1);
+    ui->horizontalSlider_4->setRange(0, 100);
     ui->label_5->setStyleSheet("QLabel{background-color:rgb(255,0,0);border:2px solid red;}");
 
     connect( ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(changeR()));

@@ -139,6 +139,7 @@ unsigned char ModelPart::getColourB() {
 
 
 void ModelPart::setVisible(double isVisible) {
+    isVisible = isVisible / 100;
     set(1, isVisible);
     //Sets visibility of treeitem or entire level by looping through children
     if (actor != nullptr) {

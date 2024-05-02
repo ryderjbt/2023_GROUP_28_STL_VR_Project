@@ -163,7 +163,7 @@ void MainWindow::on_actionItem_Options_triggered() {
 
     dialog.setName( selectedPart->data(0).toString() );
     dialog.setRGB( selectedPart->getColourR(), selectedPart->getColourG(), selectedPart->getColourB() );
-    dialog.setVisibleDialog( selectedPart->data(1) );
+    dialog.setVisibleDialog( selectedPart->data(1).toDouble() );
 
     if(dialog.exec() == QDialog::Accepted) {
         emit statusUpdateMessage(QString("Dialog accepted "),0);

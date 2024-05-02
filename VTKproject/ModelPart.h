@@ -105,12 +105,12 @@ public:
     /** Set visible flag
       * @param isVisible sets visible/non-visible
       */
-    void setVisible(bool isVisible);
+    void setVisible(double isVisible);
 
     /** Get visible flag
       * @return visible flag as boolean 
       */
-    bool visible();
+    double visible();
 	
 	/** Load STL file
       * @param fileName
