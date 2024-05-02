@@ -16,7 +16,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     connect( ui->pushButton, &QPushButton::released, this, &MainWindow::handleButton1);
-    connect( ui->pushButton_2, &QPushButton::released, this, &MainWindow::handleButton2);
+    //connect( ui->pushButton_2, &QPushButton::released, this, &MainWindow::handleButton2);
+    connect(ui->pushButton_2, &QPushButton::released, this, &MainWindow::handleVRbuttonPressed);
     connect( ui->treeView, &QTreeView::clicked, this, &MainWindow::handleTreeClicked);
     connect( this, &MainWindow::statusUpdateMessage, ui->statusbar, &QStatusBar::showMessage );
     ui->treeView->addAction(ui->actionItem_Options);
@@ -135,6 +136,7 @@ void MainWindow::on_actionOpen_File_triggered(){
     QString visible("true");
 
     ModelPart *childItem = new ModelPart({ name, visible });
+    childItem->setSource(fileName);
 
     /* Append to parent */
     selectedPart->appendChild(childItem);
@@ -171,6 +173,29 @@ void MainWindow::on_actionItem_Options_triggered() {
         emit statusUpdateMessage(QString("Dialog Rejected "),0);
     }
 
+}
+
+/* Creates a VR renderer thread when the "Start VR" button is pressed, and sends all model part actors
+to the thread */
+void MainWindow::handleVRbuttonPressed()
+{
+    /* a separate vr thread is created and run */
+    VRRenderThread* vrThread = new VRRenderThread();
+    emit statusUpdateMessage(QString("Start VR button pressed, VR thread created"), 0);
+
+    /* All render objects in the tree are found and new mappers/actors are created for them */
+    ModelPart* rootItem = this->partList->getRootItem();
+    for (int i = 0; i < 3; i++)
+    {
+        ModelPart* topLevel = rootItem->child(i);
+        unsigned int childCount = topLevel->childCount();
+        for (int j = 0; j < childCount; j++)
+        {
+            ModelPart* childItem = topLevel->child(j);
+            childItem->loadSTL(childItem->getSource());
+            vrThread->addActorOffline(childItem->getActor());
+        }
+    }
 }
 
 void MainWindow::updateRenderer() {

@@ -190,6 +190,16 @@ vtkSmartPointer<vtkActor> ModelPart::getActor() {
     return actor;
 }
 
+void ModelPart::setSource(QString newSource)
+{
+    m_source = newSource;
+}
+
+QString ModelPart::getSource()
+{
+    return m_source;
+}
+
 //vtkActor* ModelPart::getNewActor() {
     /* This is a placeholder function that will be used in the next worksheet.
      * 

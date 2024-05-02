@@ -122,12 +122,17 @@ public:
       */
     vtkSmartPointer<vtkActor> getActor();
 
+    void setSource(QString newSource);
+
+    QString getSource();
+
     /** Return new actor for use in VR
       * @return pointer to new actor
       */
     vtkActor* getNewActor();
 
 private:
+    QString                                     m_source;           /**< Name of the STL file location for if the modelPart is linked to an STL */
     QList<ModelPart*>                           m_childItems;       /**< List (array) of child items */
     QList<QVariant>                             m_itemData;         /**< List (array of column data for item */
     ModelPart*                                  m_parentItem;       /**< Pointer to parent */
