@@ -1,4 +1,6 @@
-// mainwindow.cpp
+/** @file mainwindow.cpp
+* This file contains all run processes relating to the GUI of the program
+*/
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QMessageBox>
@@ -192,10 +194,12 @@ void MainWindow::handleVRbuttonPressed()
         for (int j = 0; j < childCount; j++)
         {
             ModelPart* childItem = topLevel->child(j);
-            childItem->loadSTL(childItem->getSource());
-            vrThread->addActorOffline(childItem->getActor());
+            vtkActor *childActor = childItem->getNewActor();
+            vrThread->addActorOffline(childActor);
         }
     }
+    emit statusUpdateMessage(QString("Actors added to VR render thread"), 0);
+    vrThread->start();
 }
 
 void MainWindow::updateRenderer() {

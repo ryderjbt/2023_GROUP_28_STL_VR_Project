@@ -1,10 +1,5 @@
 /**     @file ModelPart.cpp
-  *
-  *     EEEE2076 - Software Engineering & VR Project
-  *
-  *     Template for model parts that will be added as treeview items
-  *
-  *     P Evans 2022
+  * This file creates the modelPart class and all functions required to render/alter 3D objects in the main window
   */
 
 #include "ModelPart.h"
@@ -200,30 +195,28 @@ QString ModelPart::getSource()
     return m_source;
 }
 
-//vtkActor* ModelPart::getNewActor() {
-    /* This is a placeholder function that will be used in the next worksheet.
-     * 
-     * The default mapper/actor combination can only be used to render the part in 
-     * the GUI, it CANNOT also be used to render the part in VR. This means you need
-     * to create a second mapper/actor combination for use in VR - that is the role
-     * of this function. */
-     
-     
-     /* 1. Create new mapper */
-     
-     /* 2. Create new actor and link to mapper */
-     
-     /* 3. Link the vtkProperties of the original actor to the new actor. This means 
-      *    if you change properties of the original part (colour, position, etc), the
-      *    changes will be reflected in the GUI AND VR rendering.
-      *    
-      *    See the vtkActor documentation, particularly the GetProperty() and SetProperty()
-      *    functions.
-      */
-    
+vtkActor* ModelPart::getNewActor()
+{
+    vtkSmartPointer<vtkPolyData> pd = vtkSmartPointer<vtkPolyData>::New();
+    pd->DeepCopy(mapper->GetInputDataObject(0, 0));
+
+    /* 1. Create new mapper */
+    vtkSmartPointer<vtkMapper>vrMapper = vtkSmartPointer<vtkDataSetMapper>::New();
+    if (file == nullptr) {
+
+        qDebug() << "ERROR: nothing in file reader";
+
+        return nullptr;
+
+    }
+
+    vrMapper->SetInputDataObject(pd);
+    vtkActor* vrActor = vtkActor::New();
+    vrActor->SetMapper(vrMapper);
+    vrActor->SetProperty(actor->GetProperty());
 
     /* The new vtkActor pointer must be returned here */
-//    return nullptr;
-    
-//}
+
+    return vrActor;
+}
 
