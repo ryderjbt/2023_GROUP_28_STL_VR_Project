@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     for(int i = 0; i<3; i++){
         /* Create strings for both data columns */
         QString name = QString("TopLevel %1").arg(i);
-        QString visible("true");
+        QString visible("1.0");
 
         /* Create child item */
         ModelPart *childItem = new ModelPart({ name, visible });
@@ -135,7 +135,7 @@ void MainWindow::on_actionOpen_File_triggered(){
     /* In this case, we will retrieve the name string from the internal QVariant data array */
     int text = 1 + selectedPart->childCount();
     QString name = QString("Item %1 - %2").arg(text).arg(fileName);
-    QString visible("true");
+    QString visible("1.0");
 
     ModelPart *childItem = new ModelPart({ name, visible });
     childItem->setSource(fileName);
@@ -163,7 +163,7 @@ void MainWindow::on_actionItem_Options_triggered() {
 
     dialog.setName( selectedPart->data(0).toString() );
     dialog.setRGB( selectedPart->getColourR(), selectedPart->getColourG(), selectedPart->getColourB() );
-    dialog.setVisibleDialog( selectedPart->data(1).toBool() );
+    dialog.setVisibleDialog( selectedPart->data(1) );
 
     if(dialog.exec() == QDialog::Accepted) {
         emit statusUpdateMessage(QString("Dialog accepted "),0);

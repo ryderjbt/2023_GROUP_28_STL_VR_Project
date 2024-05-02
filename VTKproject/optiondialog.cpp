@@ -9,11 +9,13 @@ OptionDialog::OptionDialog(QWidget *parent)
     ui->horizontalSlider->setRange(0, 255);
     ui->horizontalSlider_2->setRange(0, 255);
     ui->horizontalSlider_3->setRange(0, 255);
+    ui->horizontalSlider_4->setRange(0, 1);
     ui->label_5->setStyleSheet("QLabel{background-color:rgb(255,0,0);border:2px solid red;}");
 
     connect( ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(changeR()));
     connect( ui->horizontalSlider_2, SIGNAL(valueChanged(int)), this, SLOT(changeG()));
     connect( ui->horizontalSlider_3, SIGNAL(valueChanged(int)), this, SLOT(changeB()));
+    connect(ui->horizontalSlider_4, SIGNAL(valueChanged(double)), this, SLOT(setVisibleDialog()));
 }
 
 OptionDialog::~OptionDialog()
@@ -81,10 +83,14 @@ unsigned int OptionDialog::getB(){
     return ui->horizontalSlider_3->value();
 }
 
-void OptionDialog::setVisibleDialog( bool visible ){
-    ui->checkBox->QAbstractButton::setChecked( visible );
+void OptionDialog::setVisibleDialog( double visible ){
+    //ui->checkBox->QAbstractButton::setChecked( visible );
+
+    ui->horizontalSlider_4->setValue(visible);
+    qDebug() << ui->horizontalSlider_4->value();
+    ui->horizontalSlider_4->setValue(ui->horizontalSlider_4->value());
 }
 
-bool OptionDialog::getVisible(){
-    return ui->checkBox->isChecked();
+double OptionDialog::getVisible(){
+    return ui->horizontalSlider_4->value();
 }

@@ -140,7 +140,7 @@ private:
     /* These are some typical properties that I think the part will need, you might
      * want to add you own.
      */
-    bool                                        isVisible;          /**< True/false to indicate if should be visible in model rendering */
+    double                                        isVisible;          /**< True/false to indicate if should be visible in model rendering */
 
     int                                         ColourR;
     int                                         ColourG;
