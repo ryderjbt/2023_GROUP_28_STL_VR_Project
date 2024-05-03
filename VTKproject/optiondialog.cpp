@@ -16,10 +16,6 @@ OptionDialog::OptionDialog(QWidget *parent)
     connect( ui->horizontalSlider_2, SIGNAL(valueChanged(int)), this, SLOT(changeG()));
     connect( ui->horizontalSlider_3, SIGNAL(valueChanged(int)), this, SLOT(changeB()));
     connect(ui->horizontalSlider_4, SIGNAL(valueChanged(double)), this, SLOT(setVisibleDialog()));
-    connect(ui->checkBox, &QCheckBox::stateChanged, this, &OptionDialog::changeLevel1Visibility);
-    connect(ui->checkBox_2, &QCheckBox::stateChanged, this, &OptionDialog::changeLevel2Visibility);
-    connect(ui->checkBox_3, &QCheckBox::stateChanged, this, &OptionDialog::changeLevel3Visibility);
-
 }
 
 OptionDialog::~OptionDialog()
@@ -33,39 +29,6 @@ void OptionDialog::setName( QString name ){
 
 QString OptionDialog::getName(){
     return ui->lineEdit->text();
-}
-
-void OptionDialog::changeLevel1Visibility(int state) {
-    // Check if the checkbox is checked (state == Qt::Checked) or unchecked (state == Qt::Unchecked)
-    if (state == Qt::Checked) {
-        // Set the visibility of level 1 to true
-        emit level1VisibilityChanged(true);
-    } else {
-        // Set the visibility of level 1 to false
-        emit level1VisibilityChanged(false);
-    }
-}
-
-void OptionDialog::changeLevel2Visibility(int state) {
-    // Check if the checkbox is checked (state == Qt::Checked) or unchecked (state == Qt::Unchecked)
-    if (state == Qt::Checked) {
-        // Set the visibility of level 2 to true
-        emit level2VisibilityChanged(true);
-    } else {
-        // Set the visibility of level 2 to false
-        emit level2VisibilityChanged(false);
-    }
-}
-
-void OptionDialog::changeLevel3Visibility(int state) {
-    // Check if the checkbox is checked (state == Qt::Checked) or unchecked (state == Qt::Unchecked)
-    if (state == Qt::Checked) {
-        // Set the visibility of level 3 to true
-        emit level3VisibilityChanged(true);
-    } else {
-        // Set the visibility of level 3 to false
-        emit level3VisibilityChanged(false);
-    }
 }
 
 void OptionDialog::setRGB( unsigned int R, unsigned int G, unsigned int B ){
