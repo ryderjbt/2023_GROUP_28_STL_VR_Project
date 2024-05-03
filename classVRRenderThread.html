@@ -87,6 +87,12 @@ Public Types</h2></td></tr>
 , <b>ROTATE_Z</b>
  }</td></tr>
 <tr class="separator:af5393c7e3267e22c69da6e0617296e3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae54e55debf52a3afee10238942ef5669"><td class="memItemLeft" align="right" valign="top"><a id="ae54e55debf52a3afee10238942ef5669"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><b>Command</b> { <b>END_RENDER</b>
+, <b>ROTATE_X</b>
+, <b>ROTATE_Y</b>
+, <b>ROTATE_Z</b>
+ }</td></tr>
+<tr class="separator:ae54e55debf52a3afee10238942ef5669"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -98,6 +104,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a17bb943e3b852339398cfbb7cb12cf13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abbc905472309a2da473241a596e43813"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVRRenderThread.html#abbc905472309a2da473241a596e43813">issueCommand</a> (int cmd, double value)</td></tr>
 <tr class="separator:abbc905472309a2da473241a596e43813"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35976e55f6655840aa217aa8a066f196"><td class="memItemLeft" align="right" valign="top"><a id="a35976e55f6655840aa217aa8a066f196"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>VRRenderThread</b> (QObject *parent=nullptr)</td></tr>
+<tr class="separator:a35976e55f6655840aa217aa8a066f196"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17bb943e3b852339398cfbb7cb12cf13"><td class="memItemLeft" align="right" valign="top"><a id="a17bb943e3b852339398cfbb7cb12cf13"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>addActorOffline</b> (vtkActor *actor)</td></tr>
+<tr class="separator:a17bb943e3b852339398cfbb7cb12cf13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e4ee9efa1db2f1d41731e06ef19813b"><td class="memItemLeft" align="right" valign="top"><a id="a3e4ee9efa1db2f1d41731e06ef19813b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>issueCommand</b> (Command cmd, double value)</td></tr>
+<tr class="separator:a3e4ee9efa1db2f1d41731e06ef19813b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -107,6 +122,9 @@ Public Attributes</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
 <tr class="memitem:af5bbbaf8625fc42278476a43bf018661"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVRRenderThread.html#af5bbbaf8625fc42278476a43bf018661">run</a> () override</td></tr>
+<tr class="separator:af5bbbaf8625fc42278476a43bf018661"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af5bbbaf8625fc42278476a43bf018661"><td class="memItemLeft" align="right" valign="top"><a id="af5bbbaf8625fc42278476a43bf018661"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>run</b> () override</td></tr>
 <tr class="separator:af5bbbaf8625fc42278476a43bf018661"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Enumeration Documentation</h2>
@@ -256,6 +274,7 @@ Protected Member Functions</h2></td></tr>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li><a class="el" href="VRRenderThread_8h_source.html">VRRenderThread.h</a></li>
+<li><a class="el" href="VRRenderThread__K_8h_source.html">VRRenderThread_K.h</a></li>
 <li><a class="el" href="VRRenderThread_8cpp.html">VRRenderThread.cpp</a></li>
 </ul>
 </div><!-- contents -->
