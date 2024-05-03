@@ -44,8 +44,8 @@
     <rect>
      <x>10</x>
      <y>20</y>
-     <width>37</width>
-     <height>12</height>
+     <width>41</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
@@ -121,7 +121,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>180</y>
+     <y>190</y>
      <width>231</width>
      <height>20</height>
     </rect>
@@ -147,7 +147,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>230</y>
+     <y>240</y>
      <width>231</width>
      <height>20</height>
     </rect>
@@ -160,13 +160,52 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>210</y>
+     <y>220</y>
      <width>91</width>
      <height>16</height>
     </rect>
    </property>
    <property name="text">
     <string>Visibility</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>270</y>
+     <width>93</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Lvl 1</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_2">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>270</y>
+     <width>93</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Lvl 2</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_3">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>270</y>
+     <width>93</width>
+     <height>26</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Lvl 3</string>
    </property>
   </widget>
  </widget>
