@@ -26,7 +26,8 @@ public:
     void changeB();
     unsigned int getB();
     QString b;
-    void setVisibleDialog( double );
+    void setVisibleDialog(double);
+    void changeVisibility();
     double getVisible();
 
 

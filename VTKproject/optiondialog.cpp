@@ -83,10 +83,13 @@ unsigned int OptionDialog::getB(){
     return ui->horizontalSlider_3->value();
 }
 
-void OptionDialog::setVisibleDialog( double visible ){
-    //ui->checkBox->QAbstractButton::setChecked( visible );
+void OptionDialog::setVisibleDialog(double visible ){
 
-    ui->horizontalSlider_4->setValue(visible);
+    ui->horizontalSlider_4->setValue( visible );
+    changeVisibility();
+}
+
+void OptionDialog::changeVisibility() {
     qDebug() << ui->horizontalSlider_4->value();
     ui->horizontalSlider_4->setValue(ui->horizontalSlider_4->value());
 }

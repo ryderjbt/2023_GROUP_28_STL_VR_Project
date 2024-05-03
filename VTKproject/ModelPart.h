@@ -105,7 +105,7 @@ public:
     /** Set visible flag
       * @param isVisible sets visible/non-visible
       */
-    void setVisible(double isVisible);
+    void setVisible(double visibleParam);
 
     /** Get visible flag
       * @return visible flag as boolean 
@@ -141,7 +141,7 @@ private:
      * want to add you own.
      */
     double                                        isVisible;          /**< True/false to indicate if should be visible in model rendering */
-
+    
     int                                         ColourR;
     int                                         ColourG;
     int                                         ColourB;

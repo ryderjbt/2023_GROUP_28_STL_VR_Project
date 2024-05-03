@@ -28,7 +28,8 @@ ModelPart::ModelPart(const QList<QVariant>& data, ModelPart* parent )
     ColourR = 50;
     ColourG = 100;
     ColourB = 10;
-    isVisible = 1.0;
+    isVisible = 100;
+
 
     /* You probably want to give the item a default colour */
 }
@@ -138,12 +139,13 @@ unsigned char ModelPart::getColourB() {
 }
 
 
-void ModelPart::setVisible(double isVisible) {
-    isVisible = isVisible / 100;
-    set(1, isVisible);
+void ModelPart::setVisible(double visibleParam) {
+    isVisible = visibleParam;
+    double visibility = isVisible / 100;
+    set(1, visibility);
     //Sets visibility of treeitem or entire level by looping through children
     if (actor != nullptr) {
-        actor->GetProperty()->SetOpacity(isVisible);
+        actor->GetProperty()->SetOpacity(visibility);
     }
     else {
         for (i = 0; i < childCount(); i++) {
