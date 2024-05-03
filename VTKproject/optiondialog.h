@@ -19,13 +19,10 @@ public:
     void setRGB( unsigned int, unsigned int, unsigned int);
     void changeR();
     unsigned int getR();
-    QString r;
     void changeG();
     unsigned int getG();
-    QString g;
     void changeB();
     unsigned int getB();
-    QString b;
     void setVisibleDialog(double);
     void changeVisibility();
     double getVisible();
@@ -33,6 +30,9 @@ public:
 
 private:
     Ui::OptionDialog *ui;
+    QString r;
+    QString g;
+    QString b;
 };
 
 #endif // OPTIONDIALOG_H

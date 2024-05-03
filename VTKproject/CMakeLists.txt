@@ -89,3 +89,28 @@ add_custom_target(  VRBindings )
 add_custom_command( TARGET VRBindings PRE_BUILD
 COMMAND ${CMAKE_COMMAND} -E
             copy_directory ${CMAKE_SOURCE_DIR}/vrbindings ${CMAKE_BINARY_DIR}/ )
+
+#INSTALLER
+
+set(CPACK_SOURCE_GENERATOR "NSIS")
+
+
+include(CPack)
+
+# set the install/uninstall icon used for the installer itself
+#set (CPACK_NSIS_MUI_ICON
+ #    "${CMake_SOURCE_DIR}/Utilities/Release\\CMakeLogo.ico")
+#set (CPACK_NSIS_MUI_UNIICON
+ #    "${CMake_SOURCE_DIR}/Utilities/Release\\CMakeLogo.ico")
+
+install(TARGETS VTKproject RUNTIME DESTINATION bin)
+
+install(DIRECTORY "C:/Program FIles (x86)/VTK/bin" DESTINATION bin COMPONENT VTK FILES_MATCHING PATTERN "*.dll")
+install(DIRECTORY "C:/Qt/6.6.2/msvc2019_64/bin" DESTINATION bin COMPONENT Qt FILES_MATCHING PATTERN "*.dll")
+install(DIRECTORY "C:/OpenVR/bin/win64" DESTINATION bin COMPONENT OpenVR FILES_MATCHING PATTERN "*.dll")
+# /calc_cmake/CMakeLists.txt CHANGE ALL BACK SLASHES TO FORWARD SLASHES do openvr files by self
+set (CPACK_NSIS_PACKAGE_NAME "Group 28 VR Project")
+#set (CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\CMakeInstall.bmp")
+#set (CPACK_RESOURCE_FILE_LICENSE "")
+#set (CPACK_CREATE_DESKTOP_LINKS cmake-gui)
+set (CPACK_PACKAGE_INSTALL_DIRECTORY "VRproject")

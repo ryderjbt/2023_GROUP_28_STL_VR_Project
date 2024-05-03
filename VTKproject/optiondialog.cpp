@@ -48,24 +48,24 @@ void OptionDialog::setRGB( unsigned int R, unsigned int G, unsigned int B ){
 }
 
 void OptionDialog::changeR(){
-    qDebug() << ui->horizontalSlider->value();
-    ui->horizontalSlider->setValue(ui->horizontalSlider->value());
+    //qDebug() << ui->horizontalSlider->value();
+    //ui->horizontalSlider->setValue(ui->horizontalSlider->value());
     r = QString::number(ui->horizontalSlider->value());
 
     ui->label_5->setStyleSheet("QLabel{background-color:rgb("+r+","+g+","+b+");}");
 }
 
 void OptionDialog::changeG(){
-    qDebug() << ui->horizontalSlider_2->value();
-    ui->horizontalSlider_2->setValue(ui->horizontalSlider_2->value());
+    //qDebug() << ui->horizontalSlider_2->value();
+    //ui->horizontalSlider_2->setValue(ui->horizontalSlider_2->value());
     g = QString::number(ui->horizontalSlider_2->value());
 
     ui->label_5->setStyleSheet("QLabel{background-color:rgb("+r+","+g+","+b+");}");
 }
 
 void OptionDialog::changeB(){
-    qDebug() << ui->horizontalSlider_3->value();
-    ui->horizontalSlider_3->setValue(ui->horizontalSlider_3->value());
+    //qDebug() << ui->horizontalSlider_3->value();
+    //ui->horizontalSlider_3->setValue(ui->horizontalSlider_3->value());
     b = QString::number(ui->horizontalSlider_3->value());
 
     ui->label_5->setStyleSheet("QLabel{background-color:rgb("+r+","+g+","+b+");}");
