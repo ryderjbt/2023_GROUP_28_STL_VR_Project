@@ -3,7 +3,7 @@
 #define MAINWINDOW_H
 
 /** @file
-* This file contains the declearions of all includes and functions used by mainwindow.cpp
+* Declarations of all includes and functions used by mainwindow.cpp
 */
 
 #include <QMainWindow>
@@ -19,21 +19,28 @@
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
-class MainWindow;
+    class MainWindow;
 }
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
 public slots:
     void handleButton1();
     void handleButton2();
     void handleTreeClicked();
     void handleVRbuttonPressed();
+    void updateLevel1Visibility(bool visible);
+    void updateLevel2Visibility(bool visible);
+    void updateLevel3Visibility(bool visible);
+    void updateRenderer();
+    void updateRenderFromTree(const QModelIndex&);
+    void updateCamera();
 
 signals:
-    void statusUpdateMessage( const QString & message, int timeout );
+    void statusUpdateMessage(const QString &message, int timeout);
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -42,15 +49,15 @@ public:
 private slots:
     void on_actionOpen_File_triggered();
     void on_actionItem_Options_triggered();
-    void updateRenderer();
-    void updateRenderFromTree(const QModelIndex&);
-    void updateCamera();
 
 private:
     Ui::MainWindow *ui;
     ModelPartList* partList;
 
-    vtkSmartPointer<vtkRenderer> renderer;
+   vtkSmartPointer<vtkRenderer> renderer;
     vtkSmartPointer<vtkGenericOpenGLRenderWindow> renderWindow;
+    OptionDialog dialog; // Declare an instance of OptionDialog
 };
+
+
 #endif // MAINWINDOW_H
