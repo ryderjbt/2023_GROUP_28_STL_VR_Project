@@ -28,16 +28,17 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public slots:
-    void handleButton1();
-    void handleButton2();
+    /*void handleButton1();
+    void handleButton2();*/
     void handleTreeClicked();
     void handleVRbuttonPressed();
-    void updateLevel1Visibility(bool visible);
+    /*void updateLevel1Visibility(bool visible);
     void updateLevel2Visibility(bool visible);
-    void updateLevel3Visibility(bool visible);
+    void updateLevel3Visibility(bool visible);*/
     void updateRenderer();
     void updateRenderFromTree(const QModelIndex&);
     void updateCamera();
+    void stopVR();
 
 signals:
     void statusUpdateMessage(const QString &message, int timeout);
@@ -54,7 +55,8 @@ private:
     Ui::MainWindow *ui;
     ModelPartList* partList;
 
-   vtkSmartPointer<vtkRenderer> renderer;
+    VRRenderThread* vrThread;
+    vtkSmartPointer<vtkRenderer> renderer;
     vtkSmartPointer<vtkGenericOpenGLRenderWindow> renderWindow;
     OptionDialog dialog; // Declare an instance of OptionDialog
 };

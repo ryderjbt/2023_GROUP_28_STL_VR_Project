@@ -6,23 +6,28 @@
 #include <QMessageBox>
 
 #include <vtkGenericOpenGLRenderWindow.h>
+#include <vtkSmartPointer.h>
 #include <vtkCylinderSource.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkActor.h>
 #include <vtkProperty.h>
 #include <vtkCamera.h>
+#include <vtkLight.h>
+#include <vtkNamedColors.h>
+#include <vtkPlane.h>
+#include <vtkClipDataSet.h>
+#include <vtkShrinkFilter.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    connect( ui->pushButton, &QPushButton::released, this, &MainWindow::handleButton1);
-    connect( ui->pushButton_2, &QPushButton::released, this, &MainWindow::handleButton2);
-    connect(ui->pushButton_3, &QPushButton::released, this, &MainWindow::handleVRbuttonPressed);
-    connect(&dialog, &OptionDialog::level1VisibilityChanged, this, &MainWindow::updateLevel1Visibility);
+    connect( ui->pushButton, &QPushButton::released, this, &MainWindow::handleVRbuttonPressed);
+    connect(ui->pushButton_2, &QPushButton::released, this, &MainWindow::stopVR);
+    /*connect(&dialog, &OptionDialog::level1VisibilityChanged, this, &MainWindow::updateLevel1Visibility);
     connect(&dialog, &OptionDialog::level2VisibilityChanged, this, &MainWindow::updateLevel2Visibility);
-    connect(&dialog, &OptionDialog::level3VisibilityChanged, this, &MainWindow::updateLevel3Visibility);
+    connect(&dialog, &OptionDialog::level3VisibilityChanged, this, &MainWindow::updateLevel3Visibility);*/
     connect( ui->treeView, &QTreeView::clicked, this, &MainWindow::handleTreeClicked);
     connect( this, &MainWindow::statusUpdateMessage, ui->statusbar, &QStatusBar::showMessage );
     ui->treeView->addAction(ui->actionItem_Options);
@@ -55,8 +60,11 @@ MainWindow::MainWindow(QWidget *parent)
     renderWindow = vtkSmartPointer<vtkGenericOpenGLRenderWindow>::New();
     ui->vtkWidget->setRenderWindow(renderWindow);
 
+    vtkNew<vtkNamedColors> colors;
+
     //Add a renderer
     renderer = vtkSmartPointer<vtkRenderer>::New();
+    renderer->SetBackground(colors->GetColor3d("Silver").GetData());
     renderWindow->AddRenderer(renderer);
 
     /*Create an object and add to renderer (this will change later to display a CAD
@@ -82,6 +90,17 @@ MainWindow::MainWindow(QWidget *parent)
     cylinderActor->RotateX(30.0);
     cylinderActor->RotateY(-45.0);
 
+    //Setup light parameters
+    vtkSmartPointer<vtkLight> light = vtkSmartPointer<vtkLight>::New();
+    light->SetLightTypeToSceneLight();
+    light->SetPosition(-15, 200, 200);
+    light->SetPositional(true);
+    light->SetConeAngle(180);
+    light->SetFocalPoint(0, 0, 0);
+    light->SetColor(1, 1, 1);
+    light->SetIntensity(1);
+    renderer->AddLight(light);
+
     // Add the actor to the renderer
     renderer->AddActor(cylinderActor);
 
@@ -98,11 +117,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::handleButton1() {
-    emit statusUpdateMessage( QString("Button 1 was clicked"), 0 );
-}
-
-void MainWindow::handleButton2() {
+/*void MainWindow::handleButton2() {
     QModelIndex index = ui->treeView->currentIndex();
     ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
 
@@ -124,7 +139,7 @@ void MainWindow::handleButton2() {
     } else {
         emit statusUpdateMessage(QString("Dialog Rejected "), 0);
     }
-}
+}*/
 
 
 void MainWindow::handleTreeClicked() {
@@ -268,56 +283,92 @@ void MainWindow::updateCamera(){
     renderer->ResetCameraClippingRange();
 }
 
-void MainWindow::updateLevel1Visibility(bool visible) {
-    QModelIndex index = ui->treeView->currentIndex();
-    if (!index.isValid()) {
-        return; // No item selected in the tree view
+/* Function to stop the separate VR thread from running. Currently doesn't work :) */
+void MainWindow::stopVR()
+{
+    if (vrThread->isRunning())
+    {
+        vrThread->issueCommand(0, 0);
     }
-
-    ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
-    // Check if the selected item is a parent item
-    if (selectedPart->childCount() > 0) {
-        // Assuming level 1 corresponds to the first child of the root item
-        ModelPart *level1 = selectedPart->child(0);
-        if (level1) {
-            level1->setVisible(visible);
-            updateRenderer(); // Update the renderer to reflect the visibility change
-        }
+    else
+    {
+        emit statusUpdateMessage(QString("No VR Render Thread are currently running"), 0);
     }
 }
 
-void MainWindow::updateLevel2Visibility(bool visible) {
-    QModelIndex index = ui->treeView->currentIndex();
-    if (!index.isValid()) {
-        return; // No item selected in the tree view
-    }
+//void MainWindow::clipFilter(bool checked)
+//{
+//    if (checked == true)
+//    {
+//        /* Get the index of the selected item */
+//        QModelIndex index = ui->treeView->currentIndex();
+//
+//        /* Get a pointer to the item from the index */
+//        ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
+//
+//        vtkSmartPointer<vtkPlane> planeLeft = vtkSmartPointer<vtkPlane>::New();
+//        planeLeft->SetOrigin(0.0, 0.0, 0.0);
+//        planeLeft->SetNormal(-1.0, 0, 0);
+//        vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
+//        clipFilter->SetInputConnection(file->GetOutputPort());
+//        clipFilter->SetClipFunction(planeLeft.Get());
+//
+//        mapper->SetInputConnection(clipFilter->GetOutputPort());
+//    }
+//}
 
-    ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
-    // Check if the selected item is a parent item and has at least two children
-    if (selectedPart->childCount() > 1) {
-        // Assuming level 2 corresponds to the second child of the root item
-        ModelPart *level2 = selectedPart->child(1);
-        if (level2) {
-            level2->setVisible(visible);
-            updateRenderer(); // Update the renderer to reflect the visibility change
-        }
-    }
-}
+//void MainWindow::updateLevel1Visibility(bool visible) {
+//    QModelIndex index = ui->treeView->currentIndex();
+//    if (!index.isValid()) {
+//        return; // No item selected in the tree view
+//    }
+//
+//    ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
+//    // Check if the selected item is a parent item
+//    if (selectedPart->childCount() > 0) {
+//        // Assuming level 1 corresponds to the first child of the root item
+//        ModelPart *level1 = selectedPart->child(0);
+//        if (level1) {
+//            level1->setVisible(visible);
+//            updateRenderer(); // Update the renderer to reflect the visibility change
+//        }
+//    }
+//}
+//
+//void MainWindow::updateLevel2Visibility(bool visible) {
+//    QModelIndex index = ui->treeView->currentIndex();
+//    if (!index.isValid()) {
+//        return; // No item selected in the tree view
+//    }
+//
+//    ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
+//    // Check if the selected item is a parent item and has at least two children
+//    if (selectedPart->childCount() > 1) {
+//        // Assuming level 2 corresponds to the second child of the root item
+//        ModelPart *level2 = selectedPart->child(1);
+//        if (level2) {
+//            level2->setVisible(visible);
+//            updateRenderer(); // Update the renderer to reflect the visibility change
+//        }
+//    }
+//}
+//
+//void MainWindow::updateLevel3Visibility(bool visible) {
+//    QModelIndex index = ui->treeView->currentIndex();
+//    if (!index.isValid()) {
+//        return; // No item selected in the tree view
+//    }
+//
+//    ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
+//    // Check if the selected item is a parent item and has at least three children
+//    if (selectedPart->childCount() > 2) {
+//        // Assuming level 3 corresponds to the third child of the root item
+//        ModelPart *level3 = selectedPart->child(2);
+//        if (level3) {
+//            level3->setVisible(visible);
+//            updateRenderer(); // Update the renderer to reflect the visibility change
+//        }
+//    }
+//}
 
-void MainWindow::updateLevel3Visibility(bool visible) {
-    QModelIndex index = ui->treeView->currentIndex();
-    if (!index.isValid()) {
-        return; // No item selected in the tree view
-    }
 
-    ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
-    // Check if the selected item is a parent item and has at least three children
-    if (selectedPart->childCount() > 2) {
-        // Assuming level 3 corresponds to the third child of the root item
-        ModelPart *level3 = selectedPart->child(2);
-        if (level3) {
-            level3->setVisible(visible);
-            updateRenderer(); // Update the renderer to reflect the visibility change
-        }
-    }
-}

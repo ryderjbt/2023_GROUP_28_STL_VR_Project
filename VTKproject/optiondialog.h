@@ -24,14 +24,14 @@ public:
     double getVisible();
 
 signals:
-    void level1VisibilityChanged(int state);
+    /*void level1VisibilityChanged(int state);
     void level2VisibilityChanged(int state);
-    void level3VisibilityChanged(int state);
+    void level3VisibilityChanged(int state);*/
 
 private slots:
-    void changeLevel1Visibility(int state);
+    /*void changeLevel1Visibility(int state);
     void changeLevel2Visibility(int state);
-    void changeLevel3Visibility(int state);
+    void changeLevel3Visibility(int state);*/
     void changeR();
     void changeG();
     void changeB();

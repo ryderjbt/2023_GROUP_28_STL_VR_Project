@@ -169,45 +169,6 @@
     <string>Visibility</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>270</y>
-     <width>93</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Lvl 1</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_2">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>270</y>
-     <width>93</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Lvl 2</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_3">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>270</y>
-     <width>93</width>
-     <height>26</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Lvl 3</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections>
