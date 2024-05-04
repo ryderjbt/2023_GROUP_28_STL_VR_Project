@@ -20,6 +20,9 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkSTLReader.h>
+#include <vtkPlane.h>
+#include <vtkClipDataSet.h>
+#include <vtkShrinkFilter.h>
 
 
 
@@ -188,16 +191,6 @@ vtkSmartPointer<vtkActor> ModelPart::getActor() {
     return actor;
 }
 
-void ModelPart::setSource(QString newSource)
-{
-    m_source = newSource;
-}
-
-QString ModelPart::getSource()
-{
-    return m_source;
-}
-
 vtkActor* ModelPart::getNewActor()
 {
     vtkSmartPointer<vtkPolyData> pd = vtkSmartPointer<vtkPolyData>::New();
@@ -221,5 +214,43 @@ vtkActor* ModelPart::getNewActor()
     /* The new vtkActor pointer must be returned here */
 
     return vrActor;
+}
+
+void ModelPart::clipFilter()
+{
+    if (actor != nullptr)
+    {
+        mapper_copy = vtkSmartPointer<vtkPolyDataMapper>::New();
+        mapper_copy->SetInputConnection(file->GetOutputPort());
+
+        vtkSmartPointer<vtkPlane> planeLeft = vtkSmartPointer<vtkPlane>::New();
+        planeLeft->SetOrigin(0.0, 0.0, 0.0);
+        planeLeft->SetNormal(-1.0, 0, 0);
+        vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
+        clipFilter->SetInputConnection(file->GetOutputPort());
+        clipFilter->SetClipFunction(planeLeft.Get());
+
+        mapper_copy->SetInputConnection(clipFilter->GetOutputPort());
+        mapper_copy->SetInputConnection(file->GetOutputPort());
+
+        /* 3. Initialise the part's vtkActor and link to the mapper */
+        actor = vtkSmartPointer<vtkActor>::New();
+        vtkColor3<unsigned char> color(getColourR(), getColourG(), getColourB());
+        double r = color.GetRed() / 255.0;
+        double g = color.GetGreen() / 255.0;
+        double b = color.GetBlue() / 255.0;
+        actor->SetMapper(mapper_copy);
+        actor->GetProperty()->SetDiffuse(0.8);
+        actor->GetProperty()->SetColor(r, g, b);
+        actor->GetProperty()->SetSpecular(0.3);
+        actor->GetProperty()->SetSpecularPower(60.0);
+    }
+    else
+    {
+        for (int i = 0; i < childCount(); i++)
+        {
+            child(i)->clipFilter();
+        }
+    }
 }
 

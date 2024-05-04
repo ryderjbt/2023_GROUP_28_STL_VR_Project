@@ -39,6 +39,7 @@ public slots:
     void updateRenderFromTree(const QModelIndex&);
     void updateCamera();
     void stopVR();
+    void clipFilter();
 
 signals:
     void statusUpdateMessage(const QString &message, int timeout);

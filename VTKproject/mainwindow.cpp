@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&dialog, &OptionDialog::level3VisibilityChanged, this, &MainWindow::updateLevel3Visibility);*/
     connect( ui->treeView, &QTreeView::clicked, this, &MainWindow::handleTreeClicked);
     connect( this, &MainWindow::statusUpdateMessage, ui->statusbar, &QStatusBar::showMessage );
+    connect(ui->checkBox_2, &QCheckBox::stateChanged, this, &MainWindow::clipFilter);
     ui->treeView->addAction(ui->actionItem_Options);
 
     /* Create / allocate the ModelList */
@@ -177,7 +178,6 @@ void MainWindow::on_actionOpen_File_triggered(){
     QString visible("1.0");
 
     ModelPart *childItem = new ModelPart({ name, visible });
-    childItem->setSource(fileName);
 
     /* Append to parent */
     selectedPart->appendChild(childItem);
@@ -276,6 +276,7 @@ void MainWindow::updateRenderFromTree(const QModelIndex& index) {
     }
 }
 
+/* Updates the camera parameters for use after render changes */
 void MainWindow::updateCamera(){
     renderer->ResetCamera();
     renderer->GetActiveCamera()->Azimuth(30);
@@ -296,26 +297,28 @@ void MainWindow::stopVR()
     }
 }
 
-//void MainWindow::clipFilter(bool checked)
-//{
-//    if (checked == true)
-//    {
-//        /* Get the index of the selected item */
-//        QModelIndex index = ui->treeView->currentIndex();
-//
-//        /* Get a pointer to the item from the index */
-//        ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
-//
-//        vtkSmartPointer<vtkPlane> planeLeft = vtkSmartPointer<vtkPlane>::New();
-//        planeLeft->SetOrigin(0.0, 0.0, 0.0);
-//        planeLeft->SetNormal(-1.0, 0, 0);
-//        vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
-//        clipFilter->SetInputConnection(file->GetOutputPort());
-//        clipFilter->SetClipFunction(planeLeft.Get());
-//
-//        mapper->SetInputConnection(clipFilter->GetOutputPort());
-//    }
-//}
+void MainWindow::clipFilter()
+{
+    QModelIndex index = ui->treeView->currentIndex();
+    ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
+    
+    if (ui->checkBox_2->checkState() == Qt::Checked)
+    {
+        renderer->RemoveActor(selectedPart->getActor());
+        selectedPart->clipFilter();
+        emit statusUpdateMessage(QString("Clip filter applied to " +selectedPart->data(0).toString()), 0);
+
+        renderer->AddActor(selectedPart->getActor());
+
+        renderer->Render();
+        updateCamera();
+        renderWindow->Render();
+    }
+    else
+    {
+        emit statusUpdateMessage(QString("Checkbox is unchecked"), 0);
+    }
+}
 
 //void MainWindow::updateLevel1Visibility(bool visible) {
 //    QModelIndex index = ui->treeView->currentIndex();
