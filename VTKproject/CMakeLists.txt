@@ -92,25 +92,33 @@ COMMAND ${CMAKE_COMMAND} -E
 
 #INSTALLER
 
+include(InstallRequiredSystemLibraries)
 set(CPACK_SOURCE_GENERATOR "NSIS")
+set(CPACK_PACKAGE_NAME "VTKproject") 
+set(CPACK_PACKAGE_VENDOR "Group 28")
+#set (CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\CMakeInstall.bmp")
+#set (CPACK_RESOURCE_FILE_LICENSE "")
 
+
+set(CPACK_NSIS_MODIFY_PATH ON)
+set(CPACK_CREATE_DESKTOP_LINKS VTKproject)
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "VRproject")
+
+set(CPACK_PACKAGE_EXECUTABLES "VTKproject" "Renderer")
 
 include(CPack)
 
-# set the install/uninstall icon used for the installer itself
-#set (CPACK_NSIS_MUI_ICON
- #    "${CMake_SOURCE_DIR}/Utilities/Release\\CMakeLogo.ico")
-#set (CPACK_NSIS_MUI_UNIICON
- #    "${CMake_SOURCE_DIR}/Utilities/Release\\CMakeLogo.ico")
-
 install(TARGETS VTKproject RUNTIME DESTINATION bin)
 
-install(DIRECTORY "C:/Program FIles (x86)/VTK/bin" DESTINATION bin COMPONENT VTK FILES_MATCHING PATTERN "*.dll")
-install(DIRECTORY "C:/Qt/6.6.2/msvc2019_64/bin" DESTINATION bin COMPONENT Qt FILES_MATCHING PATTERN "*.dll")
-install(DIRECTORY "C:/OpenVR/bin/win64" DESTINATION bin COMPONENT OpenVR FILES_MATCHING PATTERN "*.dll")
-# /calc_cmake/CMakeLists.txt CHANGE ALL BACK SLASHES TO FORWARD SLASHES do openvr files by self
-set (CPACK_NSIS_PACKAGE_NAME "Group 28 VR Project")
-#set (CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\CMakeInstall.bmp")
-#set (CPACK_RESOURCE_FILE_LICENSE "")
-#set (CPACK_CREATE_DESKTOP_LINKS cmake-gui)
-set (CPACK_PACKAGE_INSTALL_DIRECTORY "VRproject")
+install(DIRECTORY "C:/VRlibs/VS" DESTINATION debugx64 COMPONENT debugx64 FILES_MATCHING PATTERN "*.dll")
+install(DIRECTORY "C:/VRlibs/ucrt" DESTINATION debugx64 COMPONENT debugx64 FILES_MATCHING PATTERN "*.dll")
+install(DIRECTORY "C:/VRlibs/VTK" DESTINATION VTK COMPONENT VTK FILES_MATCHING PATTERN "*.dll")
+install(DIRECTORY "C:/VRlibs/QtVRlibs" DESTINATION Qt COMPONENT Qt)
+install(DIRECTORY "C:/VRlibs/OpenVR" DESTINATION OpenVR COMPONENT OpenVR FILES_MATCHING PATTERN "*.dll")
+install(DIRECTORY "C:/VRlibs/Examples" DESTINATION stl_files COMPONENT stl_files)
+
+cpack_add_component_group(Libraries DESCRIPTION "Libraries required")
+cpack_add_component(Qt DISPLAY_NAME "QT Libraries" DESCRIPTION "Qt dynamic libraries" GROUP Libraries)
+cpack_add_component(VTK DISPLAY_NAME "VTK Libraries" DESCRIPTION "VTK dynamic libraries" GROUP Libraries)
+cpack_add_component(OpenVR DISPLAY_NAME "OpenVR" DESCRIPTION "OpenVR dynamic libraries" GROUP Libraries)
+cpack_add_component(stl_files DISPLAY_NAME "STL Examples" DESCRIPTION "STL examples for the software")
