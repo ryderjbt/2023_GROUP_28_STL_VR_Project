@@ -40,6 +40,7 @@ public slots:
     void updateCamera();
     void stopVR();
     void clipFilter();
+    void shrinkFilter();
 
 signals:
     void statusUpdateMessage(const QString &message, int timeout);

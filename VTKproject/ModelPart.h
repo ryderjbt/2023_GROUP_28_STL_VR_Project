@@ -130,6 +130,10 @@ public:
     void clipFilter();
     void shrinkFilter();
 
+    /* return true/false variables stating if shrink/clip filters have been applied to */
+    bool shrinked();
+    bool clipped();
+
 private:
     QList<ModelPart*>                           m_childItems;       /**< List (array) of child items */
     QList<QVariant>                             m_itemData;         /**< List (array of column data for item */
@@ -144,6 +148,9 @@ private:
     int                                         ColourG;
     int                                         ColourB;
     int                                         i;
+
+    bool                                        isShrinked;
+    bool                                        isClipped;
 	/* These are vtk properties that will be used to load/render a model of this part,
 	 * commented out for now but will be used later
 	 */

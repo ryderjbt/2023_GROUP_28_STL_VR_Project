@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&dialog, &OptionDialog::level3VisibilityChanged, this, &MainWindow::updateLevel3Visibility);*/
     connect( ui->treeView, &QTreeView::clicked, this, &MainWindow::handleTreeClicked);
     connect( this, &MainWindow::statusUpdateMessage, ui->statusbar, &QStatusBar::showMessage );
+    connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::shrinkFilter);
     connect(ui->checkBox_2, &QCheckBox::stateChanged, this, &MainWindow::clipFilter);
     ui->treeView->addAction(ui->actionItem_Options);
 
@@ -152,6 +153,23 @@ void MainWindow::handleTreeClicked() {
 
     /* In this case, we will retrieve the name string from the internal QVariant data array */
     QString text = selectedPart->data(0).toString();
+    /* shrink/clip filter checkboxes are updated to display the status of the selected model */
+    if (selectedPart->shrinked() == true)
+    {
+        ui->checkBox->setCheckState(Qt::Checked);
+    }
+    else
+    {
+        ui->checkBox->setCheckState(Qt::Unchecked);
+    }
+    if (selectedPart->clipped() == true)
+    {
+        ui->checkBox_2->setCheckState(Qt::Checked);
+    }
+    else
+    {
+        ui->checkBox_2->setCheckState(Qt::Unchecked);
+    }
 
     emit statusUpdateMessage(QString("The selected item is: ")+text, 0);
 }
@@ -297,6 +315,31 @@ void MainWindow::stopVR()
     }
 }
 
+/* applies a shrink filter to the selected item/top level */
+void MainWindow::shrinkFilter()
+{
+    QModelIndex index = ui->treeView->currentIndex();
+    ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
+
+    if (ui->checkBox->checkState() == Qt::Checked)
+    {
+        renderer->RemoveActor(selectedPart->getActor());
+        selectedPart->shrinkFilter();
+        emit statusUpdateMessage(QString("Shrink filter applied to " + selectedPart->data(0).toString()), 0);
+
+        renderer->AddActor(selectedPart->getActor());
+
+        renderer->Render();
+        updateCamera();
+        renderWindow->Render();
+    }
+    else
+    {
+        emit statusUpdateMessage(QString("Checkbox is unchecked"), 0);
+    }
+}
+
+/* applies a clip filter to the selected item/top level */
 void MainWindow::clipFilter()
 {
     QModelIndex index = ui->treeView->currentIndex();
@@ -316,7 +359,8 @@ void MainWindow::clipFilter()
     }
     else
     {
-        emit statusUpdateMessage(QString("Checkbox is unchecked"), 0);
+        emit statusUpdateMessage(QString("Checkbox_2 is unchecked"), 0);
+
     }
 }
 
