@@ -1,3 +1,6 @@
+/** @file
+* declarations of all functions and member variables used by the OptionDialog class
+*/
 #ifndef OPTIONDIALOG_H
 #define OPTIONDIALOG_H
 
@@ -30,7 +33,7 @@ private slots:
 
 private:
     Ui::OptionDialog *ui;
-    QString r;
+    QString r;  
     QString g;
     QString b;
 };

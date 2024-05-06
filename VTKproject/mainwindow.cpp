@@ -312,7 +312,6 @@ void MainWindow::updateRenderFromTree(const QModelIndex& index) {
     }
 }
 
-/* Updates the camera parameters for use after render changes */
 void MainWindow::updateCamera(){
     renderer->ResetCamera();
     renderer->GetActiveCamera()->Azimuth(30);
@@ -320,7 +319,6 @@ void MainWindow::updateCamera(){
     renderer->ResetCameraClippingRange();
 }
 
-/* Function to stop the separate VR thread from running. Currently doesn't work :) */
 void MainWindow::stopVR()
 {
     if (vrThread->isRunning())
@@ -357,51 +355,58 @@ void MainWindow::changeLighting(int value)
     }
 }
 
-/* applies a shrink filter to the selected item/top level */
 void MainWindow::shrinkFilter()
 {
     QModelIndex index = ui->treeView->currentIndex();
     ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
+    renderer->RemoveActor(selectedPart->getActor());
 
     if (ui->checkBox->checkState() == Qt::Checked)
     {
-        renderer->RemoveActor(selectedPart->getActor());
         selectedPart->shrinkFilter();
         emit statusUpdateMessage(QString("Shrink filter applied to " + selectedPart->data(0).toString()), 0);
 
-        renderer->AddActor(selectedPart->getActor());
-
-        renderer->Render();
-        renderWindow->Render();
     }
     else
     {
-        emit statusUpdateMessage(QString("Checkbox is unchecked"), 0);
+        selectedPart->undoFilters();
+        if (ui->checkBox_2->checkState() == Qt::Checked)
+        {
+            selectedPart->clipFilter();
+        }
+        emit statusUpdateMessage(QString("Shrink filter removed from " + selectedPart->data(0).toString()), 0);
     }
+    renderer->AddActor(selectedPart->getActor());
+
+    renderer->Render();
+    renderWindow->Render();
 }
 
-/* applies a clip filter to the selected item/top level */
 void MainWindow::clipFilter()
 {
     QModelIndex index = ui->treeView->currentIndex();
     ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
+    renderer->RemoveActor(selectedPart->getActor());
     
     if (ui->checkBox_2->checkState() == Qt::Checked)
     {
-        renderer->RemoveActor(selectedPart->getActor());
         selectedPart->clipFilter();
         emit statusUpdateMessage(QString("Clip filter applied to " +selectedPart->data(0).toString()), 0);
 
-        renderer->AddActor(selectedPart->getActor());
-
-        renderer->Render();
-        renderWindow->Render();
     }
     else
     {
-        emit statusUpdateMessage(QString("Checkbox_2 is unchecked"), 0);
-
+        selectedPart->undoFilters();
+        if (ui->checkBox->checkState() == Qt::Checked)
+        {
+            selectedPart->shrinkFilter();
+        }
+        emit statusUpdateMessage(QString("Clip filter removed from " + selectedPart->data(0).toString()), 0);
     }
+    renderer->AddActor(selectedPart->getActor());
+
+    renderer->Render();
+    renderWindow->Render();
 }
 
 //void MainWindow::updateLevel1Visibility(bool visible) {

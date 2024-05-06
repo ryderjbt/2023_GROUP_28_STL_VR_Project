@@ -127,11 +127,26 @@ public:
       */
     vtkActor* getNewActor();
 
+    /** Apply clip filter to the selected model
+      */
     void clipFilter();
+
+    /** Apply shrink filter to the selected model
+      */
     void shrinkFilter();
 
-    /* return true/false variables stating if shrink/clip filters have been applied to */
+    /** Remove any filters applied to the model
+      */
+    void undoFilters();
+
+    /** Return bool telling whether a shrink filter has been applied to a model
+      * @return bool isShrinked, which is true if a shrink filter has been applied to the model
+      */
     bool shrinked();
+
+    /** Return bool telling whether a clip filter has been applied to a model
+      * @return bool isClipped, which is true if a clip filter has been applied to the model
+      */
     bool clipped();
 
 private:
@@ -144,9 +159,9 @@ private:
      */
     double                                        isVisible;          /**< True/false to indicate if should be visible in model rendering */
     
-    int                                         ColourR;
-    int                                         ColourG;
-    int                                         ColourB;
+    int                                         ColourR;            /**< intensity of model's red colour intensity */
+    int                                         ColourG;            /**< intensity of model's green colour intensity */
+    int                                         ColourB;            /**< intensity of model's blue colour intensity */
     int                                         i;
 
     bool                                        isShrinked;

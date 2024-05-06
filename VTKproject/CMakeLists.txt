@@ -33,7 +33,7 @@ set(PROJECT_SOURCES
     optiondialog.h
     optiondialog.cpp
     optiondialog.ui
-    VRRenderThread.cpp # Add VRRenderThread.cpp to the project sources
+    VRRenderThread.cpp
     VRRenderThread.h
     ${TS_FILES}
 )

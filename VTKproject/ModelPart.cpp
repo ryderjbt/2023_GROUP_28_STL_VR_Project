@@ -236,7 +236,10 @@ void ModelPart::clipFilter()
         /* Create a new mapper to apply the filter to.
         A new mapper is used so that any filter changes made do not affect the original mapper, and
         thus can be reversed */
-        mapper_copy = vtkSmartPointer<vtkPolyDataMapper>::New();
+        if (mapper_copy == nullptr)
+        {
+            mapper_copy = vtkSmartPointer<vtkPolyDataMapper>::New();
+        }
 
         vtkSmartPointer<vtkPlane> planeLeft = vtkSmartPointer<vtkPlane>::New();
         planeLeft->SetOrigin(0.0, 0.0, 0.0);
@@ -244,6 +247,8 @@ void ModelPart::clipFilter()
         vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
         clipFilter->SetInputConnection(file->GetOutputPort());
         clipFilter->SetClipFunction(planeLeft.Get());
+        clipFilter->GenerateClippedOutputOn();
+        clipFilter->Update();
 
         mapper_copy->SetInputConnection(clipFilter->GetOutputPort());
         mapper_copy->SetInputConnection(file->GetOutputPort());
@@ -274,10 +279,13 @@ void ModelPart::shrinkFilter()
     isShrinked = true;
     if (actor != nullptr)
     {
-        /* Create a new mapper to apply the filter to.
+        /* A vtkShrinkFilter object is created and applied to mapper_copy
         A new mapper is used so that any filter changes made do not affect the original mapper, and
         thus can be reversed */
-        mapper_copy = vtkSmartPointer<vtkPolyDataMapper>::New();
+        if (mapper_copy == nullptr)
+        {
+            mapper_copy = vtkSmartPointer<vtkPolyDataMapper>::New();
+        }
 
         vtkSmartPointer<vtkShrinkFilter> shrinkFilter = vtkSmartPointer<vtkShrinkFilter>::New();
         shrinkFilter->SetInputConnection(file->GetOutputPort());
@@ -304,6 +312,34 @@ void ModelPart::shrinkFilter()
         for (int i = 0; i < childCount(); i++)
         {
             child(i)->shrinkFilter();
+        }
+    }
+}
+
+void ModelPart::undoFilters()
+{
+    if (actor != nullptr)
+    {
+        /* the mapper used for filters is reinitialized to remove all filters from it */
+        mapper_copy = vtkSmartPointer<vtkPolyDataMapper>::New();
+
+        /* Initialise a new vtkActor for the part and link to the original, unmodified mapper */
+        actor = vtkSmartPointer<vtkActor>::New();
+        vtkColor3<unsigned char> color(getColourR(), getColourG(), getColourB());
+        double r = color.GetRed() / 255.0;
+        double g = color.GetGreen() / 255.0;
+        double b = color.GetBlue() / 255.0;
+        actor->SetMapper(mapper);
+        actor->GetProperty()->SetDiffuse(0.8);
+        actor->GetProperty()->SetColor(r, g, b);
+        actor->GetProperty()->SetSpecular(0.3);
+        actor->GetProperty()->SetSpecularPower(60.0);
+    }
+    else
+    {
+        for (int i = 0; i < childCount(); i++)
+        {
+            child(i)->undoFilters();
         }
     }
 }

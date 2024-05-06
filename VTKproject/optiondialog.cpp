@@ -1,3 +1,6 @@
+/** @file 
+* defines the OptionDialog class and its associated functions
+*/
 #include "optiondialog.h"
 #include "ui_optiondialog.h"
 
