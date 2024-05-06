@@ -44,6 +44,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         icons.qrc
         optiondialog.h optiondialog.cpp optiondialog.ui
+        VTKproject1.rc
     )
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
@@ -94,31 +95,39 @@ COMMAND ${CMAKE_COMMAND} -E
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_SOURCE_GENERATOR "NSIS")
-set(CPACK_PACKAGE_NAME "VTKproject") 
+set(CPACK_PACKAGE_NAME "VRproject") 
 set(CPACK_PACKAGE_VENDOR "Group 28")
-#set (CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\CMakeInstall.bmp")
-#set (CPACK_RESOURCE_FILE_LICENSE "")
-
+set(CPACK_NSIS_PACKAGE_NAME "Group28VRproject")
+set(CPACK_NSIS_MUI_ICON "C:/Users/Ryder/2023_GROUP_28/VTKproject/Icons\\installIcon.ico")
+set(CPACK_NSIS_MUI_UNIICON "C:/Users/Ryder/2023_GROUP_28/VTKproject/Icons\\unInstallIcon.ico")
+set(CPACK_PACKAGE_ICON "C:/Users/Ryder/2023_GROUP_28/VTKproject/Icons\\projectBanner256.bmp")
+set(CPACK_RESOURCE_FILE_LICENSE "C:/Program Files/CMake/doc/cmake/Copyright.txt")
+set(CPACK_NSIS_MENU_LINKS 
+"doc/cmake-${VERSION_MAJOR}.${VERSION_MINOR}/cmake-gui.html" "cmake-gui Help" 
+"http://www.cmake.org" "CMake Web Site" 
+"https://ryderjbt.github.io/2023_GROUP_28/index.html" "Doxygen website documentation")
 
 set(CPACK_NSIS_MODIFY_PATH ON)
 set(CPACK_CREATE_DESKTOP_LINKS VTKproject)
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "VRproject")
 
-set(CPACK_PACKAGE_EXECUTABLES "VTKproject" "Renderer")
+set(CPACK_PACKAGE_EXECUTABLES "VTKproject" "Group28VRproject")
 
 include(CPack)
 
 install(TARGETS VTKproject RUNTIME DESTINATION bin)
 
-install(DIRECTORY "C:/VRlibs/VS" DESTINATION debugx64 COMPONENT debugx64 FILES_MATCHING PATTERN "*.dll")
-install(DIRECTORY "C:/VRlibs/ucrt" DESTINATION debugx64 COMPONENT debugx64 FILES_MATCHING PATTERN "*.dll")
-install(DIRECTORY "C:/VRlibs/VTK" DESTINATION VTK COMPONENT VTK FILES_MATCHING PATTERN "*.dll")
-install(DIRECTORY "C:/VRlibs/QtVRlibs" DESTINATION Qt COMPONENT Qt)
-install(DIRECTORY "C:/VRlibs/OpenVR" DESTINATION OpenVR COMPONENT OpenVR FILES_MATCHING PATTERN "*.dll")
+install(DIRECTORY "C:/VRlibs/MSVC" DESTINATION libs COMPONENT debugx64 FILES_MATCHING PATTERN "*.dll")
+install(DIRECTORY "C:/VRlibs/ucrt" DESTINATION libs COMPONENT debugx64 FILES_MATCHING PATTERN "*.dll")
+install(DIRECTORY "C:/VRlibs/VTK" DESTINATION libs COMPONENT VTK FILES_MATCHING PATTERN "*.dll")
+install(DIRECTORY "C:/VRlibs/Qt" DESTINATION libs COMPONENT Qt)
+install(DIRECTORY "C:/VRlibs/OpenVR" DESTINATION libs COMPONENT OpenVR FILES_MATCHING PATTERN "*.dll")
 install(DIRECTORY "C:/VRlibs/Examples" DESTINATION stl_files COMPONENT stl_files)
+install(FILES "C:/VRlibs/README.txt" DESTINATION libs)
 
 cpack_add_component_group(Libraries DESCRIPTION "Libraries required")
+cpack_add_component(debugx64 DISPLAY_NAME "Debug model Libraries" DESCRIPTION "Libraries required to launch project successfully related to MSVC and windows tools" GROUP Libraries)
 cpack_add_component(Qt DISPLAY_NAME "QT Libraries" DESCRIPTION "Qt dynamic libraries" GROUP Libraries)
 cpack_add_component(VTK DISPLAY_NAME "VTK Libraries" DESCRIPTION "VTK dynamic libraries" GROUP Libraries)
-cpack_add_component(OpenVR DISPLAY_NAME "OpenVR" DESCRIPTION "OpenVR dynamic libraries" GROUP Libraries)
+cpack_add_component(OpenVR DISPLAY_NAME "OpenVR Libraries" DESCRIPTION "OpenVR dynamic libraries" GROUP Libraries)
 cpack_add_component(stl_files DISPLAY_NAME "STL Examples" DESCRIPTION "STL examples for the software")
