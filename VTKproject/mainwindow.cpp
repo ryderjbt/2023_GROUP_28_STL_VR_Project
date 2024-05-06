@@ -17,12 +17,16 @@
 #include <vtkPlane.h>
 #include <vtkClipDataSet.h>
 #include <vtkShrinkFilter.h>
+#include <vtkLightCollection.h>
+#include <vtkLightActor.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    ui->horizontalSlider->setRange(0, 100);
+    ui->horizontalSlider->setValue(100);
     connect( ui->pushButton, &QPushButton::released, this, &MainWindow::handleVRbuttonPressed);
     connect(ui->pushButton_2, &QPushButton::released, this, &MainWindow::stopVR);
     /*connect(&dialog, &OptionDialog::level1VisibilityChanged, this, &MainWindow::updateLevel1Visibility);
@@ -32,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect( this, &MainWindow::statusUpdateMessage, ui->statusbar, &QStatusBar::showMessage );
     connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::shrinkFilter);
     connect(ui->checkBox_2, &QCheckBox::stateChanged, this, &MainWindow::clipFilter);
+    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(changeLighting(int)));
     ui->treeView->addAction(ui->actionItem_Options);
 
     /* Create / allocate the ModelList */
@@ -101,7 +106,6 @@ MainWindow::MainWindow(QWidget *parent)
     light->SetFocalPoint(0, 0, 0);
     light->SetColor(1, 1, 1);
     light->SetIntensity(1);
-    renderer->AddLight(light);
 
     // Add the actor to the renderer
     renderer->AddActor(cylinderActor);
@@ -112,37 +116,14 @@ MainWindow::MainWindow(QWidget *parent)
     renderer->GetActiveCamera()->Elevation(30);
     renderer->ResetCameraClippingRange();
 
+    renderWindow->Render();
+    renderer->AddLight(light);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-/*void MainWindow::handleButton2() {
-    QModelIndex index = ui->treeView->currentIndex();
-    ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
-
-    QString text = selectedPart->data(0).toString();
-
-    emit statusUpdateMessage(QString("The selected item is: ") + text, 0);
-
-    OptionDialog dialog(this);
-    dialog.setName(selectedPart->data(0).toString());
-    dialog.setRGB(selectedPart->getColourR(), selectedPart->getColourG(), selectedPart->getColourB());
-    dialog.setVisibleDialog(selectedPart->visible());
-
-    if (dialog.exec() == QDialog::Accepted) {
-        emit statusUpdateMessage(QString("Dialog accepted "), 0);
-        selectedPart->set(0, dialog.getName());
-        selectedPart->setColour(dialog.getR(), dialog.getG(), dialog.getB());
-        selectedPart->setVisible(dialog.getVisible());
-        updateRenderer();
-    } else {
-        emit statusUpdateMessage(QString("Dialog Rejected "), 0);
-    }
-}*/
-
 
 void MainWindow::handleTreeClicked() {
     /* Get the index of the selected item */
@@ -239,7 +220,7 @@ to the thread */
 void MainWindow::handleVRbuttonPressed()
 {
     /* a separate vr thread is created and run */
-    VRRenderThread* vrThread = new VRRenderThread();
+    vrThread = new VRRenderThread();
     emit statusUpdateMessage(QString("Start VR button pressed, VR thread created"), 0);
 
     /* All render objects in the tree are found and new mappers/actors are created for them */
@@ -315,6 +296,30 @@ void MainWindow::stopVR()
     }
 }
 
+void MainWindow::changeLighting(int value)
+{
+
+    double intensity = value;
+    intensity = intensity / 100;
+    QString text = QString::number(value);
+    emit statusUpdateMessage(QString("Lighting intensity changed to " + text), 0);
+
+    vtkLightCollection* lights = renderer->GetLights();
+    lights->InitTraversal();
+
+    vtkLight* light = lights->GetNextItem();
+    if (light == nullptr)
+    {
+        emit statusUpdateMessage(QString("idk"), 0);
+    }
+    else
+    {
+        light->SetIntensity(intensity);
+        renderer->Render();
+        renderWindow->Render();
+    }
+}
+
 /* applies a shrink filter to the selected item/top level */
 void MainWindow::shrinkFilter()
 {
@@ -330,7 +335,6 @@ void MainWindow::shrinkFilter()
         renderer->AddActor(selectedPart->getActor());
 
         renderer->Render();
-        updateCamera();
         renderWindow->Render();
     }
     else
@@ -354,7 +358,6 @@ void MainWindow::clipFilter()
         renderer->AddActor(selectedPart->getActor());
 
         renderer->Render();
-        updateCamera();
         renderWindow->Render();
     }
     else

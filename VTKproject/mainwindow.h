@@ -41,6 +41,7 @@ public slots:
     void stopVR();
     void clipFilter();
     void shrinkFilter();
+    void changeLighting(int value);
 
 signals:
     void statusUpdateMessage(const QString &message, int timeout);
