@@ -29,9 +29,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->horizontalSlider->setValue(100);
     connect( ui->pushButton, &QPushButton::released, this, &MainWindow::handleVRbuttonPressed);
     connect(ui->pushButton_2, &QPushButton::released, this, &MainWindow::stopVR);
-    /*connect(&dialog, &OptionDialog::level1VisibilityChanged, this, &MainWindow::updateLevel1Visibility);
-    connect(&dialog, &OptionDialog::level2VisibilityChanged, this, &MainWindow::updateLevel2Visibility);
-    connect(&dialog, &OptionDialog::level3VisibilityChanged, this, &MainWindow::updateLevel3Visibility);*/
     connect( ui->treeView, &QTreeView::clicked, this, &MainWindow::handleTreeClicked);
     connect( this, &MainWindow::statusUpdateMessage, ui->statusbar, &QStatusBar::showMessage );
     connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::shrinkFilter);
@@ -185,6 +182,45 @@ void MainWindow::on_actionOpen_File_triggered(){
 
     childItem->loadSTL(fileName);
     updateRenderer();
+}
+
+void MainWindow::on_actionOpen_Folder_triggered() {
+    // Checking action works
+    emit statusUpdateMessage(QString("Open directory action triggered"), 0);
+    QString dir = QFileDialog::getExistingDirectory(
+        this,
+        tr("Open Directory"),
+        "C:\\",
+        QFileDialog::ShowDirsOnly
+        | QFileDialog::DontResolveSymlinks);
+    emit statusUpdateMessage(QString(dir), 0);
+    if(!dir.isEmpty()){
+        QDirIterator it(dir, QDir::Files);
+        while (it.hasNext()) {
+            QString filepath = it.next();
+            if (filepath.endsWith(".stl")) {
+                QString fileName = filepath;
+                /* Get the index of the selected item */
+                QModelIndex index = ui->treeView->currentIndex();
+
+                /* Get a pointer to the item from the index */
+                ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
+
+                /* In this case, we will retrieve the name string from the internal QVariant data array */
+                int text = 1 + selectedPart->childCount();
+                QString name = QString("Item %1 - %2").arg(text).arg(fileName);
+                QString visible("1.0");
+
+                ModelPart* childItem = new ModelPart({ name, visible });
+
+                /* Append to parent */
+                selectedPart->appendChild(childItem);
+
+                childItem->loadSTL(fileName);
+                updateRenderer();
+            }
+        }
+    }
 }
 
 void MainWindow::on_actionItem_Options_triggered() {

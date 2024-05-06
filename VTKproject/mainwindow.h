@@ -8,6 +8,8 @@
 
 #include <QMainWindow>
 #include <QFileDialog>
+#include <QDir>
+#include <QDirIterator>
 
 #include <vtkRenderer.h>
 #include <vtkGenericOpenGLRenderWindow.h>
@@ -28,13 +30,8 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public slots:
-    /*void handleButton1();
-    void handleButton2();*/
     void handleTreeClicked();
     void handleVRbuttonPressed();
-    /*void updateLevel1Visibility(bool visible);
-    void updateLevel2Visibility(bool visible);
-    void updateLevel3Visibility(bool visible);*/
     void updateRenderer();
     void updateRenderFromTree(const QModelIndex&);
     void updateCamera();
@@ -52,6 +49,7 @@ public:
 
 private slots:
     void on_actionOpen_File_triggered();
+    void on_actionOpen_Folder_triggered();
     void on_actionItem_Options_triggered();
 
 private:

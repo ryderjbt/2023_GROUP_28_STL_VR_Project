@@ -16,10 +16,6 @@ OptionDialog::OptionDialog(QWidget *parent)
     connect(ui->horizontalSlider_2, SIGNAL(valueChanged(int)), this, SLOT(changeG()));
     connect(ui->horizontalSlider_3, SIGNAL(valueChanged(int)), this, SLOT(changeB()));
     connect(ui->horizontalSlider_4, SIGNAL(valueChanged(double)), this, SLOT(setVisibleDialog(double)));
-
-    /*connect(ui->checkBox, &QCheckBox::stateChanged, this, &OptionDialog::changeLevel1Visibility);
-    connect(ui->checkBox_2, &QCheckBox::stateChanged, this, &OptionDialog::changeLevel2Visibility);
-    connect(ui->checkBox_3, &QCheckBox::stateChanged, this, &OptionDialog::changeLevel3Visibility);*/
 }
 
 OptionDialog::~OptionDialog()
@@ -36,21 +32,6 @@ QString OptionDialog::getName()
 {
     return ui->lineEdit->text();
 }
-
-//void OptionDialog::changeLevel1Visibility(int state)
-//{
-//    emit level1VisibilityChanged(state == Qt::Checked);
-//}
-//
-//void OptionDialog::changeLevel2Visibility(int state)
-//{
-//    emit level2VisibilityChanged(state == Qt::Checked);
-//}
-//
-//void OptionDialog::changeLevel3Visibility(int state)
-//{
-//    emit level3VisibilityChanged(state == Qt::Checked);
-//}
 
 void OptionDialog::setRGB(unsigned int R, unsigned int G, unsigned int B)
 {
@@ -105,15 +86,9 @@ unsigned int OptionDialog::getB()
 void OptionDialog::setVisibleDialog(double visible)
 {
     ui->horizontalSlider_4->setValue(static_cast<int>(visible));
-    changeVisibility();
 }
 
 double OptionDialog::getVisible()
 {
     return ui->horizontalSlider_4->value();
-}
-
-void OptionDialog::changeVisibility()
-{
-    // This method appears to be incomplete or redundant
 }
