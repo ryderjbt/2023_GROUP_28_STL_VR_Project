@@ -118,6 +118,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     renderWindow->Render();
     renderer->AddLight(light);
+
+    vrThread = new VRRenderThread();
 }
 
 MainWindow::~MainWindow()
@@ -220,7 +222,6 @@ to the thread */
 void MainWindow::handleVRbuttonPressed()
 {
     /* a separate vr thread is created and run */
-    vrThread = new VRRenderThread();
     emit statusUpdateMessage(QString("Start VR button pressed, VR thread created"), 0);
 
     /* All render objects in the tree are found and new mappers/actors are created for them */
@@ -292,7 +293,7 @@ void MainWindow::stopVR()
     }
     else
     {
-        emit statusUpdateMessage(QString("No VR Render Thread are currently running"), 0);
+        emit statusUpdateMessage(QString("No VR Render Threads are currently running"), 0);
     }
 }
 
