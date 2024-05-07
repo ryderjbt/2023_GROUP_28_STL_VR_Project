@@ -122,8 +122,7 @@ void ModelPart::setColour(const unsigned char R, const unsigned char G, const un
     //Sets colour of treeitem or entire level by looping through children
     if (actor != nullptr) {
         actor->GetProperty()->SetColor(r, g, b);
-    }
-    else {
+    } else {
         for (i = 0; i < childCount(); i++) {
             child(i)->setColour(R, G, B);
         }

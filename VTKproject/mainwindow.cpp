@@ -296,7 +296,6 @@ void MainWindow::updateRenderFromTree(const QModelIndex& index) {
         if (actor != nullptr && selectedPart->visible()) { // Ensure the actor is not null
             renderer->AddActor(actor);
         }
-        // Update the comment to reflect that this function handles both parent and child items
         // Retrieve actor from selected part and add to renderer
     }
 
@@ -408,59 +407,5 @@ void MainWindow::clipFilter()
     renderer->Render();
     renderWindow->Render();
 }
-
-//void MainWindow::updateLevel1Visibility(bool visible) {
-//    QModelIndex index = ui->treeView->currentIndex();
-//    if (!index.isValid()) {
-//        return; // No item selected in the tree view
-//    }
-//
-//    ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
-//    // Check if the selected item is a parent item
-//    if (selectedPart->childCount() > 0) {
-//        // Assuming level 1 corresponds to the first child of the root item
-//        ModelPart *level1 = selectedPart->child(0);
-//        if (level1) {
-//            level1->setVisible(visible);
-//            updateRenderer(); // Update the renderer to reflect the visibility change
-//        }
-//    }
-//}
-//
-//void MainWindow::updateLevel2Visibility(bool visible) {
-//    QModelIndex index = ui->treeView->currentIndex();
-//    if (!index.isValid()) {
-//        return; // No item selected in the tree view
-//    }
-//
-//    ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
-//    // Check if the selected item is a parent item and has at least two children
-//    if (selectedPart->childCount() > 1) {
-//        // Assuming level 2 corresponds to the second child of the root item
-//        ModelPart *level2 = selectedPart->child(1);
-//        if (level2) {
-//            level2->setVisible(visible);
-//            updateRenderer(); // Update the renderer to reflect the visibility change
-//        }
-//    }
-//}
-//
-//void MainWindow::updateLevel3Visibility(bool visible) {
-//    QModelIndex index = ui->treeView->currentIndex();
-//    if (!index.isValid()) {
-//        return; // No item selected in the tree view
-//    }
-//
-//    ModelPart *selectedPart = static_cast<ModelPart*>(index.internalPointer());
-//    // Check if the selected item is a parent item and has at least three children
-//    if (selectedPart->childCount() > 2) {
-//        // Assuming level 3 corresponds to the third child of the root item
-//        ModelPart *level3 = selectedPart->child(2);
-//        if (level3) {
-//            level3->setVisible(visible);
-//            updateRenderer(); // Update the renderer to reflect the visibility change
-//        }
-//    }
-//}
 
 

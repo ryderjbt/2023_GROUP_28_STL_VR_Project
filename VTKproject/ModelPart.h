@@ -37,7 +37,7 @@ public:
     ModelPart(const QList<QVariant>& data, ModelPart* parent = nullptr);
 
     /** Destructor
-      * Needs to free array of child items
+      *Frees array of child items
       */
     ~ModelPart();
 
