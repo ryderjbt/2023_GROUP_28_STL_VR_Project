@@ -27,6 +27,7 @@
 #include <vtkSTLReader.h>
 #include <vtkColor.h>
 #include <vtkPolyDataMapper.h>
+#include <vtkDataSetMapper.h>
 
 class ModelPart {
 public:
@@ -171,7 +172,7 @@ private:
 	 */
     vtkSmartPointer<vtkSTLReader>               file;               /**< Datafile from which part loaded */
     vtkSmartPointer<vtkPolyDataMapper>          mapper;             /**< Mapper for rendering */
-    vtkSmartPointer<vtkPolyDataMapper>          mapper_copy;        /**< Mapper copy for filter use */
+    vtkDataSetMapper*                           mapper_copy;        /**< Mapper copy for filter use */
     vtkSmartPointer<vtkActor>                   actor;              /**< Actor for rendering */
     vtkColor3<unsigned char>                    colour;             /**< User defineable colour */
 };  

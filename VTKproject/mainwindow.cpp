@@ -358,7 +358,17 @@ void MainWindow::shrinkFilter()
 {
     QModelIndex index = ui->treeView->currentIndex();
     ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
-    renderer->RemoveActor(selectedPart->getActor());
+    if (selectedPart->getActor() != nullptr)
+    {
+        renderer->RemoveActor(selectedPart->getActor());
+    }
+    else
+    {
+        for (int i = 0; i < selectedPart->childCount(); i++)
+        {
+            renderer->RemoveActor(selectedPart->child(i)->getActor());
+        }
+    }
 
     if (ui->checkBox->checkState() == Qt::Checked)
     {
@@ -375,7 +385,18 @@ void MainWindow::shrinkFilter()
         }
         emit statusUpdateMessage(QString("Shrink filter removed from " + selectedPart->data(0).toString()), 0);
     }
-    renderer->AddActor(selectedPart->getActor());
+
+    if (selectedPart->getActor() != nullptr)
+    {
+        renderer->AddActor(selectedPart->getActor());
+    }
+    else
+    {
+        for (int i = 0; i < selectedPart->childCount(); i++)
+        {
+            renderer->AddActor(selectedPart->child(i)->getActor());
+        }
+    }
 
     renderer->Render();
     renderWindow->Render();
@@ -385,7 +406,18 @@ void MainWindow::clipFilter()
 {
     QModelIndex index = ui->treeView->currentIndex();
     ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
-    renderer->RemoveActor(selectedPart->getActor());
+    
+    if (selectedPart->getActor() != nullptr)
+    {
+        renderer->RemoveActor(selectedPart->getActor());
+    }
+    else
+    {
+        for (int i = 0; i < selectedPart->childCount(); i++)
+        {
+            renderer->RemoveActor(selectedPart->child(i)->getActor());
+        }
+    }
     
     if (ui->checkBox_2->checkState() == Qt::Checked)
     {
@@ -402,7 +434,18 @@ void MainWindow::clipFilter()
         }
         emit statusUpdateMessage(QString("Clip filter removed from " + selectedPart->data(0).toString()), 0);
     }
-    renderer->AddActor(selectedPart->getActor());
+    
+    if (selectedPart->getActor() != nullptr)
+    {
+        renderer->AddActor(selectedPart->getActor());
+    }
+    else
+    {
+        for (int i = 0; i < selectedPart->childCount(); i++)
+        {
+            renderer->AddActor(selectedPart->child(i)->getActor());
+        }
+    }
 
     renderer->Render();
     renderWindow->Render();

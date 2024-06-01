@@ -44,7 +44,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         icons.qrc
         optiondialog.h optiondialog.cpp optiondialog.ui
-        VTKproject1.rc
     )
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})

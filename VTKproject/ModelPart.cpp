@@ -34,6 +34,8 @@ ModelPart::ModelPart(const QList<QVariant>& data, ModelPart* parent )
     isVisible = 100;
     isShrinked = false;
     isClipped = false;
+    
+    mapper_copy = vtkDataSetMapper::New();
 
 
     /* You probably want to give the item a default colour */
@@ -198,7 +200,7 @@ vtkActor* ModelPart::getNewActor()
     pd->DeepCopy(mapper->GetInputDataObject(0, 0));
 
     /* 1. Create new mapper */
-    vtkSmartPointer<vtkMapper>vrMapper = vtkSmartPointer<vtkDataSetMapper>::New();
+    vtkSmartPointer<vtkMapper>vrMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
     if (file == nullptr) {
 
         qDebug() << "ERROR: nothing in file reader";
@@ -232,17 +234,17 @@ void ModelPart::clipFilter()
     isClipped = true;
     if (actor != nullptr)
     {
-        /* Create a new mapper to apply the filter to.
+        /* A clip filter is created and applied to mapper_copy
         A new mapper is used so that any filter changes made do not affect the original mapper, and
         thus can be reversed */
         if (mapper_copy == nullptr)
         {
-            mapper_copy = vtkSmartPointer<vtkPolyDataMapper>::New();
+            mapper_copy = vtkDataSetMapper::New();
         }
 
         vtkSmartPointer<vtkPlane> planeLeft = vtkSmartPointer<vtkPlane>::New();
         planeLeft->SetOrigin(0.0, 0.0, 0.0);
-        planeLeft->SetNormal(-1.0, 0, 0);
+        planeLeft->SetNormal(0.0, 1.0, 0.0);
         vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
         clipFilter->SetInputConnection(file->GetOutputPort());
         clipFilter->SetClipFunction(planeLeft.Get());
@@ -250,7 +252,6 @@ void ModelPart::clipFilter()
         clipFilter->Update();
 
         mapper_copy->SetInputConnection(clipFilter->GetOutputPort());
-        mapper_copy->SetInputConnection(file->GetOutputPort());
 
         /* Initialise a new vtkActor for the part and link to the mapper */
         actor = vtkSmartPointer<vtkActor>::New();
@@ -278,12 +279,12 @@ void ModelPart::shrinkFilter()
     isShrinked = true;
     if (actor != nullptr)
     {
-        /* A vtkShrinkFilter object is created and applied to mapper_copy
+        /* A shrink filter is created and applied to mapper_copy
         A new mapper is used so that any filter changes made do not affect the original mapper, and
         thus can be reversed */
         if (mapper_copy == nullptr)
         {
-            mapper_copy = vtkSmartPointer<vtkPolyDataMapper>::New();
+            mapper_copy = vtkDataSetMapper::New();
         }
 
         vtkSmartPointer<vtkShrinkFilter> shrinkFilter = vtkSmartPointer<vtkShrinkFilter>::New();
@@ -292,7 +293,6 @@ void ModelPart::shrinkFilter()
         shrinkFilter->Update();
 
         mapper_copy->SetInputConnection(shrinkFilter->GetOutputPort());
-        mapper_copy->SetInputConnection(file->GetOutputPort());
 
         /* Initialise a new vtkActor for the part and link to the mapper */
         actor = vtkSmartPointer<vtkActor>::New();
@@ -320,7 +320,7 @@ void ModelPart::undoFilters()
     if (actor != nullptr)
     {
         /* the mapper used for filters is reinitialized to remove all filters from it */
-        mapper_copy = vtkSmartPointer<vtkPolyDataMapper>::New();
+        mapper_copy = vtkDataSetMapper::New();
 
         /* Initialise a new vtkActor for the part and link to the original, unmodified mapper */
         actor = vtkSmartPointer<vtkActor>::New();
