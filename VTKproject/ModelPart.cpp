@@ -224,27 +224,56 @@ bool ModelPart::shrinked()
     return isShrinked;
 }
 
+void ModelPart::setShrinked(bool boolstate)
+{
+    isShrinked = boolstate;
+}
+
 bool ModelPart::clipped()
 {
     return isClipped;
 }
 
-void ModelPart::clipFilter()
+void ModelPart::setClipped(bool boolstate)
 {
-    isClipped = true;
-    if (actor != nullptr)
-    {
-        /* A clip filter is created and applied to mapper_copy
-        A new mapper is used so that any filter changes made do not affect the original mapper, and
-        thus can be reversed */
-        if (mapper_copy == nullptr)
-        {
-            mapper_copy = vtkDataSetMapper::New();
-        }
+    isClipped = boolstate;
+}
 
+void ModelPart::addFilters()
+{
+    /* Checks are made to understand which filters are to be applied to the model part
+    If multiple filters must be applied to a model at once, the second filter must take the first as its input connection, and thus a separate
+    check must be made to determine if both filters are to be applied to the model */
+    if (isClipped == true && isShrinked == true)
+    {
+        /* A plane originating at the origin and intersecting the y axis at y = 0 is created */
         vtkSmartPointer<vtkPlane> planeLeft = vtkSmartPointer<vtkPlane>::New();
         planeLeft->SetOrigin(0.0, 0.0, 0.0);
         planeLeft->SetNormal(0.0, 1.0, 0.0);
+
+        /* A clip filter object is declared with an input connection to the source file
+        The clip filter is linked to the plane object */
+        vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
+        clipFilter->SetInputConnection(file->GetOutputPort());
+        clipFilter->SetClipFunction(planeLeft.Get());
+        clipFilter->GenerateClippedOutputOn();
+        clipFilter->Update();
+
+        /* A shrink filter object is created with an input connection to the clip filter */
+        vtkSmartPointer<vtkShrinkFilter> shrinkFilter = vtkSmartPointer<vtkShrinkFilter>::New();
+        shrinkFilter->SetInputConnection(clipFilter->GetOutputPort());
+        shrinkFilter->SetShrinkFactor(.8);
+        shrinkFilter->Update();
+
+        /* The mapper is connected to the shrink filter object */
+        mapper_copy->SetInputConnection(shrinkFilter->GetOutputPort());
+    }
+    else if (isClipped == true)
+    {
+        vtkSmartPointer<vtkPlane> planeLeft = vtkSmartPointer<vtkPlane>::New();
+        planeLeft->SetOrigin(0.0, 0.0, 0.0);
+        planeLeft->SetNormal(0.0, 1.0, 0.0);
+
         vtkSmartPointer<vtkClipDataSet> clipFilter = vtkSmartPointer<vtkClipDataSet>::New();
         clipFilter->SetInputConnection(file->GetOutputPort());
         clipFilter->SetClipFunction(planeLeft.Get());
@@ -252,94 +281,32 @@ void ModelPart::clipFilter()
         clipFilter->Update();
 
         mapper_copy->SetInputConnection(clipFilter->GetOutputPort());
-
-        /* Initialise a new vtkActor for the part and link to the mapper */
-        actor = vtkSmartPointer<vtkActor>::New();
-        vtkColor3<unsigned char> color(getColourR(), getColourG(), getColourB());
-        double r = color.GetRed() / 255.0;
-        double g = color.GetGreen() / 255.0;
-        double b = color.GetBlue() / 255.0;
-        actor->SetMapper(mapper_copy);
-        actor->GetProperty()->SetDiffuse(0.8);
-        actor->GetProperty()->SetColor(r, g, b);
-        actor->GetProperty()->SetSpecular(0.3);
-        actor->GetProperty()->SetSpecularPower(60.0);
     }
-    else
+    else if (isShrinked == true)
     {
-        for (int i = 0; i < childCount(); i++)
-        {
-            child(i)->clipFilter();
-        }
-    }
-}
-
-void ModelPart::shrinkFilter()
-{
-    isShrinked = true;
-    if (actor != nullptr)
-    {
-        /* A shrink filter is created and applied to mapper_copy
-        A new mapper is used so that any filter changes made do not affect the original mapper, and
-        thus can be reversed */
-        if (mapper_copy == nullptr)
-        {
-            mapper_copy = vtkDataSetMapper::New();
-        }
-
         vtkSmartPointer<vtkShrinkFilter> shrinkFilter = vtkSmartPointer<vtkShrinkFilter>::New();
         shrinkFilter->SetInputConnection(file->GetOutputPort());
         shrinkFilter->SetShrinkFactor(.8);
         shrinkFilter->Update();
 
         mapper_copy->SetInputConnection(shrinkFilter->GetOutputPort());
-
-        /* Initialise a new vtkActor for the part and link to the mapper */
-        actor = vtkSmartPointer<vtkActor>::New();
-        vtkColor3<unsigned char> color(getColourR(), getColourG(), getColourB());
-        double r = color.GetRed() / 255.0;
-        double g = color.GetGreen() / 255.0;
-        double b = color.GetBlue() / 255.0;
-        actor->SetMapper(mapper_copy);
-        actor->GetProperty()->SetDiffuse(0.8);
-        actor->GetProperty()->SetColor(r, g, b);
-        actor->GetProperty()->SetSpecular(0.3);
-        actor->GetProperty()->SetSpecularPower(60.0);
     }
     else
     {
-        for (int i = 0; i < childCount(); i++)
-        {
-            child(i)->shrinkFilter();
-        }
+        // If neither checkbox is checked, the mapper is simply connected to the original source file
+        mapper_copy->SetInputConnection(file->GetOutputPort());
     }
-}
 
-void ModelPart::undoFilters()
-{
-    if (actor != nullptr)
-    {
-        /* the mapper used for filters is reinitialized to remove all filters from it */
-        mapper_copy = vtkDataSetMapper::New();
-
-        /* Initialise a new vtkActor for the part and link to the original, unmodified mapper */
-        actor = vtkSmartPointer<vtkActor>::New();
-        vtkColor3<unsigned char> color(getColourR(), getColourG(), getColourB());
-        double r = color.GetRed() / 255.0;
-        double g = color.GetGreen() / 255.0;
-        double b = color.GetBlue() / 255.0;
-        actor->SetMapper(mapper);
-        actor->GetProperty()->SetDiffuse(0.8);
-        actor->GetProperty()->SetColor(r, g, b);
-        actor->GetProperty()->SetSpecular(0.3);
-        actor->GetProperty()->SetSpecularPower(60.0);
-    }
-    else
-    {
-        for (int i = 0; i < childCount(); i++)
-        {
-            child(i)->undoFilters();
-        }
-    }
+    /* Initialise a new vtkActor for the part and link to the original, unmodified mapper */
+    actor = vtkSmartPointer<vtkActor>::New();
+    vtkColor3<unsigned char> color(getColourR(), getColourG(), getColourB());
+    double r = color.GetRed() / 255.0;
+    double g = color.GetGreen() / 255.0;
+    double b = color.GetBlue() / 255.0;
+    actor->SetMapper(mapper_copy);
+    actor->GetProperty()->SetDiffuse(0.8);
+    actor->GetProperty()->SetColor(r, g, b);
+    actor->GetProperty()->SetSpecular(0.3);
+    actor->GetProperty()->SetSpecularPower(60.0);
 }
 

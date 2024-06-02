@@ -64,21 +64,16 @@ public slots:
 
     void stopVR();
 
-    /** Applies a clipFilter to actors rendered in the VRRenderThread
-    */
-
-    void clipFilter();
-
-    /** Applies a shrinkFilter to actors rendered in the VRRenderThread
-    */
-
-    void shrinkFilter();
-
     /** Changes the lighting intensity to match the user input value
     * @param value is the current slider value in the gui set by user
     */
 
     void changeLighting(int value);
+
+    /** Called when either the "Clip Filter" or "Shrink Filter" checkbox is clicked. Applies/removes filters from the selected modelPart depending on the checkState of either checkbox
+    */
+
+    void applyFilters();
 
 signals:
 

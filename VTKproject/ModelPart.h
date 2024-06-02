@@ -128,27 +128,29 @@ public:
       */
     vtkActor* getNewActor();
 
-    /** Apply clip filter to the selected model
-      */
-    void clipFilter();
-
-    /** Apply shrink filter to the selected model
-      */
-    void shrinkFilter();
-
-    /** Remove any filters applied to the model
-      */
-    void undoFilters();
-
     /** Return bool telling whether a shrink filter has been applied to a model
       * @return bool isShrinked, which is true if a shrink filter has been applied to the model
       */
     bool shrinked();
 
+    /** set the value of the isShrinked bool
+      *@param desired bool state
+      */
+    void setShrinked(bool boolState);
+
+    /** Set the value of the isClipped bool
+      * @param desired bool stated
+      */
+    void setClipped(bool boolstate);
+
     /** Return bool telling whether a clip filter has been applied to a model
       * @return bool isClipped, which is true if a clip filter has been applied to the model
       */
     bool clipped();
+
+    /** Apply appropriate filters to the modelPart depending on its isClipped/isShrinked bool states
+      */
+    void addFilters();
 
 private:
     QList<ModelPart*>                           m_childItems;       /**< List (array) of child items */

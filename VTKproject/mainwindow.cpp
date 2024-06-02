@@ -31,8 +31,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_2, &QPushButton::released, this, &MainWindow::stopVR);
     connect( ui->treeView, &QTreeView::clicked, this, &MainWindow::handleTreeClicked);
     connect( this, &MainWindow::statusUpdateMessage, ui->statusbar, &QStatusBar::showMessage );
-    connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::shrinkFilter);
-    connect(ui->checkBox_2, &QCheckBox::stateChanged, this, &MainWindow::clipFilter);
+    connect(ui->checkBox, &QCheckBox::stateChanged, this, &MainWindow::applyFilters);
+    connect(ui->checkBox_2, &QCheckBox::stateChanged, this, &MainWindow::applyFilters);
     connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(changeLighting(int)));
     ui->treeView->addAction(ui->actionItem_Options);
 
@@ -354,101 +354,34 @@ void MainWindow::changeLighting(int value)
     }
 }
 
-void MainWindow::shrinkFilter()
+void MainWindow::applyFilters()
 {
     QModelIndex index = ui->treeView->currentIndex();
     ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
+
     if (selectedPart->getActor() != nullptr)
     {
+        selectedPart->setShrinked(ui->checkBox->checkState());
+        selectedPart->setClipped(ui->checkBox_2->checkState());
         renderer->RemoveActor(selectedPart->getActor());
-    }
-    else
-    {
-        for (int i = 0; i < selectedPart->childCount(); i++)
-        {
-            renderer->RemoveActor(selectedPart->child(i)->getActor());
-        }
-    }
-
-    if (ui->checkBox->checkState() == Qt::Checked)
-    {
-        selectedPart->shrinkFilter();
-        emit statusUpdateMessage(QString("Shrink filter applied to " + selectedPart->data(0).toString()), 0);
-
-    }
-    else
-    {
-        selectedPart->undoFilters();
-        if (ui->checkBox_2->checkState() == Qt::Checked)
-        {
-            selectedPart->clipFilter();
-        }
-        emit statusUpdateMessage(QString("Shrink filter removed from " + selectedPart->data(0).toString()), 0);
-    }
-
-    if (selectedPart->getActor() != nullptr)
-    {
+        selectedPart->addFilters();
         renderer->AddActor(selectedPart->getActor());
     }
     else
     {
         for (int i = 0; i < selectedPart->childCount(); i++)
         {
-            renderer->AddActor(selectedPart->child(i)->getActor());
-        }
-    }
-
-    renderer->Render();
-    renderWindow->Render();
-}
-
-void MainWindow::clipFilter()
-{
-    QModelIndex index = ui->treeView->currentIndex();
-    ModelPart* selectedPart = static_cast<ModelPart*>(index.internalPointer());
-    
-    if (selectedPart->getActor() != nullptr)
-    {
-        renderer->RemoveActor(selectedPart->getActor());
-    }
-    else
-    {
-        for (int i = 0; i < selectedPart->childCount(); i++)
-        {
+            selectedPart->child(i)->setShrinked(ui->checkBox->checkState());
+            selectedPart->child(i)->setClipped(ui->checkBox_2->checkState());
             renderer->RemoveActor(selectedPart->child(i)->getActor());
-        }
-    }
-    
-    if (ui->checkBox_2->checkState() == Qt::Checked)
-    {
-        selectedPart->clipFilter();
-        emit statusUpdateMessage(QString("Clip filter applied to " +selectedPart->data(0).toString()), 0);
-
-    }
-    else
-    {
-        selectedPart->undoFilters();
-        if (ui->checkBox->checkState() == Qt::Checked)
-        {
-            selectedPart->shrinkFilter();
-        }
-        emit statusUpdateMessage(QString("Clip filter removed from " + selectedPart->data(0).toString()), 0);
-    }
-    
-    if (selectedPart->getActor() != nullptr)
-    {
-        renderer->AddActor(selectedPart->getActor());
-    }
-    else
-    {
-        for (int i = 0; i < selectedPart->childCount(); i++)
-        {
+            selectedPart->child(i)->addFilters();
             renderer->AddActor(selectedPart->child(i)->getActor());
         }
     }
 
     renderer->Render();
     renderWindow->Render();
+    emit statusUpdateMessage(QString("Filter applied to " + selectedPart->data(0).toString()), 0);
 }
 
 
