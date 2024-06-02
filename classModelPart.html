@@ -113,16 +113,16 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>getColourB</
 <tr class="separator:a3d845a3cb1d357a0c2f4ffb131e73116"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad40112df77afcccbc969d28243117831"><td class="memItemLeft" align="right" valign="top">vtkActor *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#ad40112df77afcccbc969d28243117831">getNewActor</a> ()</td></tr>
 <tr class="separator:ad40112df77afcccbc969d28243117831"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb4ef9d952fb2f3113580d4629bb80d5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#aeb4ef9d952fb2f3113580d4629bb80d5">clipFilter</a> ()</td></tr>
-<tr class="separator:aeb4ef9d952fb2f3113580d4629bb80d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d42deb6065a04f124a6609bc20ea7e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#a5d42deb6065a04f124a6609bc20ea7e7">shrinkFilter</a> ()</td></tr>
-<tr class="separator:a5d42deb6065a04f124a6609bc20ea7e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abab92cdbd8e0920911f55d1cbd418b5a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#abab92cdbd8e0920911f55d1cbd418b5a">undoFilters</a> ()</td></tr>
-<tr class="separator:abab92cdbd8e0920911f55d1cbd418b5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acda599bf947f646e14791ff28ea4846a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#acda599bf947f646e14791ff28ea4846a">shrinked</a> ()</td></tr>
 <tr class="separator:acda599bf947f646e14791ff28ea4846a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f9dff1a6ec9b0aaf090be45a96d1f46"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#a0f9dff1a6ec9b0aaf090be45a96d1f46">setShrinked</a> (bool boolState)</td></tr>
+<tr class="separator:a0f9dff1a6ec9b0aaf090be45a96d1f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb4628f9bf81c07ed58a52f155558504"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#aeb4628f9bf81c07ed58a52f155558504">setClipped</a> (bool boolstate)</td></tr>
+<tr class="separator:aeb4628f9bf81c07ed58a52f155558504"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4824331f98a7a1822206a1951f0bf42"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#af4824331f98a7a1822206a1951f0bf42">clipped</a> ()</td></tr>
 <tr class="separator:af4824331f98a7a1822206a1951f0bf42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a974945917a28630233f8a258835a5ce1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#a974945917a28630233f8a258835a5ce1">addFilters</a> ()</td></tr>
+<tr class="separator:a974945917a28630233f8a258835a5ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4f22ba9a54525edde005cb4eb7366648"></a>
@@ -179,6 +179,24 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>getColourB</
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a974945917a28630233f8a258835a5ce1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a974945917a28630233f8a258835a5ce1">&#9670;&nbsp;</a></span>addFilters()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ModelPart::addFilters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Apply appropriate filters to the modelPart depending on its isClipped/isShrinked bool states </p>
+
+</div>
+</div>
 <a id="a52074db110367665c3e262919e172c98"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a52074db110367665c3e262919e172c98">&#9670;&nbsp;</a></span>appendChild()</h2>
 
@@ -243,24 +261,6 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>getColourB</
       </table>
 </div><div class="memdoc">
 <p>Return number of children to this item </p><dl class="section return"><dt>Returns</dt><dd>number of children </dd></dl>
-
-</div>
-</div>
-<a id="aeb4ef9d952fb2f3113580d4629bb80d5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb4ef9d952fb2f3113580d4629bb80d5">&#9670;&nbsp;</a></span>clipFilter()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ModelPart::clipFilter </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Apply clip filter to the selected model </p>
 
 </div>
 </div>
@@ -456,6 +456,30 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>getColourB</
 
 </div>
 </div>
+<a id="aeb4628f9bf81c07ed58a52f155558504"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb4628f9bf81c07ed58a52f155558504">&#9670;&nbsp;</a></span>setClipped()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ModelPart::setClipped </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>boolstate</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Set the value of the isClipped bool </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">desired</td><td>bool stated </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="abbaaa19d7d24b9f1138072d594bd838c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#abbaaa19d7d24b9f1138072d594bd838c">&#9670;&nbsp;</a></span>setColour()</h2>
 
@@ -488,6 +512,30 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>getColourB</
       </table>
 </div><div class="memdoc">
 <p>Set colour (0-255 RGB values as ints) </p>
+
+</div>
+</div>
+<a id="a0f9dff1a6ec9b0aaf090be45a96d1f46"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f9dff1a6ec9b0aaf090be45a96d1f46">&#9670;&nbsp;</a></span>setShrinked()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ModelPart::setShrinked </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>boolState</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>set the value of the isShrinked bool </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">desired</td><td>bool state </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -530,42 +578,6 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>getColourB</
       </table>
 </div><div class="memdoc">
 <p>Return bool telling whether a shrink filter has been applied to a model </p><dl class="section return"><dt>Returns</dt><dd>bool isShrinked, which is true if a shrink filter has been applied to the model </dd></dl>
-
-</div>
-</div>
-<a id="a5d42deb6065a04f124a6609bc20ea7e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d42deb6065a04f124a6609bc20ea7e7">&#9670;&nbsp;</a></span>shrinkFilter()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ModelPart::shrinkFilter </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Apply shrink filter to the selected model </p>
-
-</div>
-</div>
-<a id="abab92cdbd8e0920911f55d1cbd418b5a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abab92cdbd8e0920911f55d1cbd418b5a">&#9670;&nbsp;</a></span>undoFilters()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void ModelPart::undoFilters </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p>Remove any filters applied to the model </p>
 
 </div>
 </div>

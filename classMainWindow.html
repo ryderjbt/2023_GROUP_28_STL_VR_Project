@@ -92,12 +92,10 @@ Public Slots</h2></td></tr>
 <tr class="separator:aa92694042c7f07a45fa3c01d15799de9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3fbcc9909cf51a1f8671f495dd493a56"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMainWindow.html#a3fbcc9909cf51a1f8671f495dd493a56">stopVR</a> ()</td></tr>
 <tr class="separator:a3fbcc9909cf51a1f8671f495dd493a56"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e212234367651c62bc09b40ad611490"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMainWindow.html#a9e212234367651c62bc09b40ad611490">clipFilter</a> ()</td></tr>
-<tr class="separator:a9e212234367651c62bc09b40ad611490"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8fee063dafc88eed439ad3fb0f2c8cda"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMainWindow.html#a8fee063dafc88eed439ad3fb0f2c8cda">shrinkFilter</a> ()</td></tr>
-<tr class="separator:a8fee063dafc88eed439ad3fb0f2c8cda"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a354b531a9fc3d1f7945ff23c0e928c97"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMainWindow.html#a354b531a9fc3d1f7945ff23c0e928c97">changeLighting</a> (int value)</td></tr>
 <tr class="separator:a354b531a9fc3d1f7945ff23c0e928c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5cf0bb1705c34ca6d3a7675e06306a92"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classMainWindow.html#a5cf0bb1705c34ca6d3a7675e06306a92">applyFilters</a> ()</td></tr>
+<tr class="separator:a5cf0bb1705c34ca6d3a7675e06306a92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
@@ -156,6 +154,32 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a5cf0bb1705c34ca6d3a7675e06306a92"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cf0bb1705c34ca6d3a7675e06306a92">&#9670;&nbsp;</a></span>applyFilters</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWindow::applyFilters </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Called when either the "Clip Filter" or "Shrink Filter" checkbox is clicked. Applies/removes filters from the selected modelPart depending on the checkState of either checkbox </p>
+
+</div>
+</div>
 <a id="a354b531a9fc3d1f7945ff23c0e928c97"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a354b531a9fc3d1f7945ff23c0e928c97">&#9670;&nbsp;</a></span>changeLighting</h2>
 
@@ -185,32 +209,6 @@ Public Member Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-</div>
-</div>
-<a id="a9e212234367651c62bc09b40ad611490"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9e212234367651c62bc09b40ad611490">&#9670;&nbsp;</a></span>clipFilter</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MainWindow::clipFilter </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Applies a clipFilter to actors rendered in the <a class="el" href="classVRRenderThread.html">VRRenderThread</a> </p>
 
 </div>
 </div>
@@ -263,32 +261,6 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Handles the function of the startVR button Creates a VR renderer thread when the "Start VR" button is pressed, and sends all model part actors to the thread </p>
-
-</div>
-</div>
-<a id="a8fee063dafc88eed439ad3fb0f2c8cda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8fee063dafc88eed439ad3fb0f2c8cda">&#9670;&nbsp;</a></span>shrinkFilter</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void MainWindow::shrinkFilter </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">slot</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p>Applies a shrinkFilter to actors rendered in the <a class="el" href="classVRRenderThread.html">VRRenderThread</a> </p>
 
 </div>
 </div>
