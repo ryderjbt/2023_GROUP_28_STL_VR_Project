@@ -177,6 +177,9 @@ private:
     vtkDataSetMapper*                           mapper_copy;        /**< Mapper copy for filter use */
     vtkSmartPointer<vtkActor>                   actor;              /**< Actor for rendering */
     vtkColor3<unsigned char>                    colour;             /**< User defineable colour */
+
+    vtkDataSetMapper*                           vrMapper;           /**< Mapper used for VR rendering */
+    vtkSmartPointer<vtkActor>                   vrActor;            /**< Actor used for VR rendering */
 };  
 
 

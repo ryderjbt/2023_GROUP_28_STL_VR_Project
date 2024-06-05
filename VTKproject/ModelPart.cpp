@@ -200,7 +200,7 @@ vtkActor* ModelPart::getNewActor()
     pd->DeepCopy(mapper->GetInputDataObject(0, 0));
 
     /* 1. Create new mapper */
-    vtkSmartPointer<vtkMapper>vrMapper = vtkSmartPointer<vtkPolyDataMapper>::New();
+    vrMapper = vtkDataSetMapper::New();
     if (file == nullptr) {
 
         qDebug() << "ERROR: nothing in file reader";
@@ -210,7 +210,7 @@ vtkActor* ModelPart::getNewActor()
     }
 
     vrMapper->SetInputDataObject(pd);
-    vtkActor* vrActor = vtkActor::New();
+    vrActor = vtkSmartPointer<vtkActor>::New();
     vrActor->SetMapper(vrMapper);
     vrActor->SetProperty(actor->GetProperty());
 
@@ -267,6 +267,7 @@ void ModelPart::addFilters()
 
         /* The mapper is connected to the shrink filter object */
         mapper_copy->SetInputConnection(shrinkFilter->GetOutputPort());
+        if (vrMapper != nullptr) vrMapper->SetInputConnection(shrinkFilter->GetOutputPort());
     }
     else if (isClipped == true)
     {
@@ -281,6 +282,7 @@ void ModelPart::addFilters()
         clipFilter->Update();
 
         mapper_copy->SetInputConnection(clipFilter->GetOutputPort());
+        if (vrMapper != nullptr) vrMapper->SetInputConnection(clipFilter->GetOutputPort());
     }
     else if (isShrinked == true)
     {
@@ -290,11 +292,13 @@ void ModelPart::addFilters()
         shrinkFilter->Update();
 
         mapper_copy->SetInputConnection(shrinkFilter->GetOutputPort());
+        if (vrMapper != nullptr) vrMapper->SetInputConnection(shrinkFilter->GetOutputPort());
     }
     else
     {
         // If neither checkbox is checked, the mapper is simply connected to the original source file
         mapper_copy->SetInputConnection(file->GetOutputPort());
+        if (vrMapper != nullptr) vrMapper->SetInputConnection(file->GetOutputPort());
     }
 
     /* Initialise a new vtkActor for the part and link to the original, unmodified mapper */
@@ -308,5 +312,14 @@ void ModelPart::addFilters()
     actor->GetProperty()->SetColor(r, g, b);
     actor->GetProperty()->SetSpecular(0.3);
     actor->GetProperty()->SetSpecularPower(60.0);
+    if (vrMapper != nullptr)
+    {
+        vrActor = vtkSmartPointer<vtkActor>::New();
+        vrActor->SetMapper(vrMapper);
+        vrActor->GetProperty()->SetDiffuse(0.8);
+        vrActor->GetProperty()->SetColor(r, g, b);
+        vrActor->GetProperty()->SetSpecular(0.3);
+        vrActor->GetProperty()->SetSpecularPower(60.0);
+    }
 }
 
