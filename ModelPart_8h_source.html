@@ -141,43 +141,44 @@ $(function() {
 <div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160; </div>
 <div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classModelPart.html#af4824331f98a7a1822206a1951f0bf42">clipped</a>();</div>
 <div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160; </div>
-<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classModelPart.html#a974945917a28630233f8a258835a5ce1">addFilters</a>();</div>
-<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160; </div>
-<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;    QList&lt;ModelPart*&gt;                           m_childItems;       </div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    QList&lt;QVariant&gt;                             m_itemData;         </div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <a class="code" href="classModelPart.html">ModelPart</a>*                                  m_parentItem;       </div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    <span class="comment">/* These are some typical properties that I think the part will need, you might</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="comment">     * want to add you own.</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="keywordtype">double</span>                                        isVisible;          </div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    <span class="keywordtype">int</span>                                         ColourR;            </div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordtype">int</span>                                         ColourG;            </div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordtype">int</span>                                         ColourB;            </div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keywordtype">int</span>                                         i;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160; </div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordtype">bool</span>                                        isShrinked;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordtype">bool</span>                                        isClipped;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="comment">/* These are vtk properties that will be used to load/render a model of this part,</span></div>
-<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;<span class="comment">     * commented out for now but will be used later</span></div>
-<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="comment">     */</span></div>
-<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    vtkSmartPointer&lt;vtkSTLReader&gt;               file;               </div>
-<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    vtkSmartPointer&lt;vtkPolyDataMapper&gt;          mapper;             </div>
-<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    vtkDataSetMapper*                           mapper_copy;        </div>
-<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    vtkSmartPointer&lt;vtkActor&gt;                   actor;              </div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    vtkColor3&lt;unsigned char&gt;                    colour;             </div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;    vtkDataSetMapper*                           vrMapper;           </div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    vtkSmartPointer&lt;vtkActor&gt;                   vrActor;            </div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;};  </div>
-<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160; </div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classModelPart.html#a1e105a0ae29a25ab5bfe8bf9ac1f9fb1">addFilters</a>(<span class="keywordtype">bool</span> vrRunning);</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    QList&lt;ModelPart*&gt;                           m_childItems;       </div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    QList&lt;QVariant&gt;                             m_itemData;         </div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;    <a class="code" href="classModelPart.html">ModelPart</a>*                                  m_parentItem;       </div>
+<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;    <span class="comment">/* These are some typical properties that I think the part will need, you might</span></div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="comment">     * want to add you own.</span></div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;    <span class="keywordtype">double</span>                                        isVisible;          </div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordtype">int</span>                                         ColourR;            </div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordtype">int</span>                                         ColourG;            </div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keywordtype">int</span>                                         ColourB;            </div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordtype">int</span>                                         i;</div>
+<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160; </div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    <span class="keywordtype">bool</span>                                        isShrinked;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keywordtype">bool</span>                                        isClipped;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;    <span class="comment">/* These are vtk properties that will be used to load/render a model of this part,</span></div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;<span class="comment">     * commented out for now but will be used later</span></div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;    vtkSmartPointer&lt;vtkSTLReader&gt;               file;               </div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    vtkSmartPointer&lt;vtkPolyDataMapper&gt;          mapper;             </div>
+<div class="line"><a name="l00178"></a><span class="lineno">  178</span>&#160;    vtkDataSetMapper*                           mapper_copy;        </div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    vtkSmartPointer&lt;vtkActor&gt;                   actor;              </div>
+<div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;    vtkColor3&lt;unsigned char&gt;                    colour;             </div>
+<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;    vtkDataSetMapper*                           vrMapper;           </div>
+<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;    vtkSmartPointer&lt;vtkActor&gt;                   vrActor;            </div>
+<div class="line"><a name="l00184"></a><span class="lineno">  184</span>&#160;};  </div>
 <div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160; </div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160; </div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160; </div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160; </div>
 <div class="ttc" id="aclassModelPart_html"><div class="ttname"><a href="classModelPart.html">ModelPart</a></div><div class="ttdef"><b>Definition:</b> ModelPart.h:32</div></div>
 <div class="ttc" id="aclassModelPart_html_a05bc0dd06a3658d9a2c46fa717dec910"><div class="ttname"><a href="classModelPart.html#a05bc0dd06a3658d9a2c46fa717dec910">ModelPart::row</a></div><div class="ttdeci">int row() const</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:107</div></div>
 <div class="ttc" id="aclassModelPart_html_a0b3b00630e9866e3e8fd648d28b7f016"><div class="ttname"><a href="classModelPart.html#a0b3b00630e9866e3e8fd648d28b7f016">ModelPart::~ModelPart</a></div><div class="ttdeci">~ModelPart()</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:45</div></div>
 <div class="ttc" id="aclassModelPart_html_a0f9dff1a6ec9b0aaf090be45a96d1f46"><div class="ttname"><a href="classModelPart.html#a0f9dff1a6ec9b0aaf090be45a96d1f46">ModelPart::setShrinked</a></div><div class="ttdeci">void setShrinked(bool boolState)</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:227</div></div>
 <div class="ttc" id="aclassModelPart_html_a178655da543bd0dae2d0ed1e2ea38a56"><div class="ttname"><a href="classModelPart.html#a178655da543bd0dae2d0ed1e2ea38a56">ModelPart::data</a></div><div class="ttdeci">QVariant data(int column) const</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:80</div></div>
+<div class="ttc" id="aclassModelPart_html_a1e105a0ae29a25ab5bfe8bf9ac1f9fb1"><div class="ttname"><a href="classModelPart.html#a1e105a0ae29a25ab5bfe8bf9ac1f9fb1">ModelPart::addFilters</a></div><div class="ttdeci">void addFilters(bool vrRunning)</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:242</div></div>
 <div class="ttc" id="aclassModelPart_html_a3232893d070ddcec42631bf5b043add8"><div class="ttname"><a href="classModelPart.html#a3232893d070ddcec42631bf5b043add8">ModelPart::set</a></div><div class="ttdeci">void set(int column, const QVariant &amp;value)</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:92</div></div>
 <div class="ttc" id="aclassModelPart_html_a3d845a3cb1d357a0c2f4ffb131e73116"><div class="ttname"><a href="classModelPart.html#a3d845a3cb1d357a0c2f4ffb131e73116">ModelPart::getActor</a></div><div class="ttdeci">vtkSmartPointer&lt; vtkActor &gt; getActor()</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:193</div></div>
 <div class="ttc" id="aclassModelPart_html_a4f22ba9a54525edde005cb4eb7366648"><div class="ttname"><a href="classModelPart.html#a4f22ba9a54525edde005cb4eb7366648">ModelPart::ModelPart</a></div><div class="ttdeci">ModelPart(const QList&lt; QVariant &gt; &amp;data, ModelPart *parent=nullptr)</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:29</div></div>
@@ -186,7 +187,6 @@ $(function() {
 <div class="ttc" id="aclassModelPart_html_a8d004c61b9f9cb0da895956a4c22b97b"><div class="ttname"><a href="classModelPart.html#a8d004c61b9f9cb0da895956a4c22b97b">ModelPart::loadSTL</a></div><div class="ttdeci">void loadSTL(QString fileName)</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:167</div></div>
 <div class="ttc" id="aclassModelPart_html_a8f15ae6b593ed02cfa769d32f97c6719"><div class="ttname"><a href="classModelPart.html#a8f15ae6b593ed02cfa769d32f97c6719">ModelPart::visible</a></div><div class="ttdeci">double visible()</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:163</div></div>
 <div class="ttc" id="aclassModelPart_html_a94623f4e95be3c462297c1abc7b6f3c7"><div class="ttname"><a href="classModelPart.html#a94623f4e95be3c462297c1abc7b6f3c7">ModelPart::columnCount</a></div><div class="ttdeci">int columnCount() const</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:74</div></div>
-<div class="ttc" id="aclassModelPart_html_a974945917a28630233f8a258835a5ce1"><div class="ttname"><a href="classModelPart.html#a974945917a28630233f8a258835a5ce1">ModelPart::addFilters</a></div><div class="ttdeci">void addFilters()</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:242</div></div>
 <div class="ttc" id="aclassModelPart_html_a9be3859d2a298e88d850a2480b7639f7"><div class="ttname"><a href="classModelPart.html#a9be3859d2a298e88d850a2480b7639f7">ModelPart::parentItem</a></div><div class="ttdeci">ModelPart * parentItem()</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:102</div></div>
 <div class="ttc" id="aclassModelPart_html_abbaaa19d7d24b9f1138072d594bd838c"><div class="ttname"><a href="classModelPart.html#abbaaa19d7d24b9f1138072d594bd838c">ModelPart::setColour</a></div><div class="ttdeci">void setColour(const unsigned char R, const unsigned char G, const unsigned char B)</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:115</div></div>
 <div class="ttc" id="aclassModelPart_html_acda599bf947f646e14791ff28ea4846a"><div class="ttname"><a href="classModelPart.html#acda599bf947f646e14791ff28ea4846a">ModelPart::shrinked</a></div><div class="ttdeci">bool shrinked()</div><div class="ttdef"><b>Definition:</b> ModelPart.cpp:222</div></div>

@@ -121,8 +121,8 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>getColourB</
 <tr class="separator:aeb4628f9bf81c07ed58a52f155558504"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af4824331f98a7a1822206a1951f0bf42"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#af4824331f98a7a1822206a1951f0bf42">clipped</a> ()</td></tr>
 <tr class="separator:af4824331f98a7a1822206a1951f0bf42"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a974945917a28630233f8a258835a5ce1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#a974945917a28630233f8a258835a5ce1">addFilters</a> ()</td></tr>
-<tr class="separator:a974945917a28630233f8a258835a5ce1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1e105a0ae29a25ab5bfe8bf9ac1f9fb1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classModelPart.html#a1e105a0ae29a25ab5bfe8bf9ac1f9fb1">addFilters</a> (bool vrRunning)</td></tr>
+<tr class="separator:a1e105a0ae29a25ab5bfe8bf9ac1f9fb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a4f22ba9a54525edde005cb4eb7366648"></a>
@@ -179,8 +179,8 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>getColourB</
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a974945917a28630233f8a258835a5ce1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a974945917a28630233f8a258835a5ce1">&#9670;&nbsp;</a></span>addFilters()</h2>
+<a id="a1e105a0ae29a25ab5bfe8bf9ac1f9fb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e105a0ae29a25ab5bfe8bf9ac1f9fb1">&#9670;&nbsp;</a></span>addFilters()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -188,12 +188,18 @@ unsigned char&#160;</td><td class="memItemRight" valign="bottom"><b>getColourB</
         <tr>
           <td class="memname">void ModelPart::addFilters </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>vrRunning</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Apply appropriate filters to the modelPart depending on its isClipped/isShrinked bool states </p>
+<p>Apply appropriate filters to the modelPart depending on its isClipped/isShrinked bool states </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">bool</td><td>relating to the state of the vr render thread </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
