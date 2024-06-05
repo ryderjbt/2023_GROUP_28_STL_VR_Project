@@ -149,8 +149,9 @@ public:
     bool clipped();
 
     /** Apply appropriate filters to the modelPart depending on its isClipped/isShrinked bool states
+      * @param bool relating to the state of the vr render thread
       */
-    void addFilters();
+    void addFilters(bool vrRunning);
 
 private:
     QList<ModelPart*>                           m_childItems;       /**< List (array) of child items */

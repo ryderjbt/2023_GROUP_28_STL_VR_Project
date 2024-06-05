@@ -239,7 +239,7 @@ void ModelPart::setClipped(bool boolstate)
     isClipped = boolstate;
 }
 
-void ModelPart::addFilters()
+void ModelPart::addFilters(bool vrRunning)
 {
     /* Checks are made to understand which filters are to be applied to the model part
     If multiple filters must be applied to a model at once, the second filter must take the first as its input connection, and thus a separate
@@ -267,7 +267,7 @@ void ModelPart::addFilters()
 
         /* The mapper is connected to the shrink filter object */
         mapper_copy->SetInputConnection(shrinkFilter->GetOutputPort());
-        if (vrMapper != nullptr) vrMapper->SetInputConnection(shrinkFilter->GetOutputPort());
+        if (vrRunning == true) { vrMapper->SetInputConnection(shrinkFilter->GetOutputPort()); }
     }
     else if (isClipped == true)
     {
@@ -282,7 +282,7 @@ void ModelPart::addFilters()
         clipFilter->Update();
 
         mapper_copy->SetInputConnection(clipFilter->GetOutputPort());
-        if (vrMapper != nullptr) vrMapper->SetInputConnection(clipFilter->GetOutputPort());
+        if (vrRunning == true) { vrMapper->SetInputConnection(clipFilter->GetOutputPort()); }
     }
     else if (isShrinked == true)
     {
@@ -292,13 +292,13 @@ void ModelPart::addFilters()
         shrinkFilter->Update();
 
         mapper_copy->SetInputConnection(shrinkFilter->GetOutputPort());
-        if (vrMapper != nullptr) vrMapper->SetInputConnection(shrinkFilter->GetOutputPort());
+        if (vrRunning == true) { vrMapper->SetInputConnection(shrinkFilter->GetOutputPort()); }
     }
     else
     {
         // If neither checkbox is checked, the mapper is simply connected to the original source file
         mapper_copy->SetInputConnection(file->GetOutputPort());
-        if (vrMapper != nullptr) vrMapper->SetInputConnection(file->GetOutputPort());
+        if (vrRunning == true) { vrMapper->SetInputConnection(file->GetOutputPort()); }
     }
 
     /* Initialise a new vtkActor for the part and link to the original, unmodified mapper */
@@ -312,7 +312,7 @@ void ModelPart::addFilters()
     actor->GetProperty()->SetColor(r, g, b);
     actor->GetProperty()->SetSpecular(0.3);
     actor->GetProperty()->SetSpecularPower(60.0);
-    if (vrMapper != nullptr)
+    if (vrRunning == true)
     {
         vrActor = vtkSmartPointer<vtkActor>::New();
         vrActor->SetMapper(vrMapper);

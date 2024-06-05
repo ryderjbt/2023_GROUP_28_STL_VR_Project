@@ -364,7 +364,8 @@ void MainWindow::applyFilters()
         selectedPart->setShrinked(ui->checkBox->checkState());
         selectedPart->setClipped(ui->checkBox_2->checkState());
         renderer->RemoveActor(selectedPart->getActor());
-        selectedPart->addFilters();
+        if (vrThread->isRunning()) { selectedPart->addFilters(true); }
+        else { selectedPart->addFilters(false); }
         renderer->AddActor(selectedPart->getActor());
     }
     else
@@ -374,7 +375,8 @@ void MainWindow::applyFilters()
             selectedPart->child(i)->setShrinked(ui->checkBox->checkState());
             selectedPart->child(i)->setClipped(ui->checkBox_2->checkState());
             renderer->RemoveActor(selectedPart->child(i)->getActor());
-            selectedPart->child(i)->addFilters();
+            if (vrThread->isRunning()) { selectedPart->child(i)->addFilters(true); }
+            else { selectedPart->child(i)->addFilters(false); }
             renderer->AddActor(selectedPart->child(i)->getActor());
         }
     }
